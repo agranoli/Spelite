@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-import axios from 'axios';
+import {useNavigation} from "@react-navigation/native";
+// import axios from 'axios';
 
 const PaymentScreen = ({ selectedItem, onClose }) => {
     const [email, setEmail] = useState('');
     const [cardNumber, setCardNumber] = useState('');
     const [expiry, setExpiry] = useState('');
     const [cvc, setCVC] = useState('');
+    const navigation = useNavigation();
 
     const handlePayment = async () => {
         try {
@@ -23,6 +25,10 @@ const PaymentScreen = ({ selectedItem, onClose }) => {
             console.error('Payment error:', error);
             // Handle payment error
         }
+    };
+
+    const handleClose = () => {
+        navigation.navigate('Shop'); // Navigate to MenuScreen when return button is pressed
     };
 
     return (
@@ -62,7 +68,7 @@ const PaymentScreen = ({ selectedItem, onClose }) => {
             </View>
             <View style={styles.buttons}>
                 <Button title="Pay" onPress={handlePayment} />
-                <Button title="Cancel" onPress={onClose} color="gray" />
+                <Button title="Cancel" onPress={handleClose} color="gray" />
             </View>
         </View>
     );

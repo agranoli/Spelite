@@ -27,11 +27,11 @@ const PlaneSelectScreen = ({ navigation }) => {
     };
 
     const planeImages = [
-        require('../Images/plane1.jpeg'),
-        require('../Images/plane2.jpeg'),
-        require('../Images/plane3.jpeg'),
-        require('../Images/plane4.jpeg'),
-        require('../Images/plane5.jpeg'),
+        require('../Images/plane1.png'),
+        require('../Images/plane2.png'),
+        require('../Images/plane3.png'),
+        require('../Images/plane4.png'),
+        require('../Images/plane5.png'),
     ];
 
     return (

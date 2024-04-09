@@ -1,14 +1,18 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import MenuScreen from './Components/Start/MenuScreen';
 import PlaneSelectScreen from "./Components/PlaneSelect/PlaneSelectScreen";
+import Register from "./Components/Register/Register";
+import Shop from "./Components/shop/shop";
+import Payment from "./Components/payment";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+
   useEffect(() => {
     const lockOrientation = async () => {
       await ScreenOrientation.lockAsync(
@@ -23,6 +27,7 @@ export default function App() {
     };
   }, []);
 
+
   return (
       <View style={styles.container}>
         <NavigationContainer>
@@ -33,15 +38,25 @@ export default function App() {
                 options={{ headerShown: false }} // Remove header for MenuScreen
             />
             <Stack.Screen
+                name="Shop"
+                component={Shop}
+                options={{ headerShown: false }} // Remove header for MenuScreen
+            />
+            <Stack.Screen
                 name="PlaneSelect"
                 component={PlaneSelectScreen}
                 options={{ headerShown: false }} // Remove header for PlaneSelectScreen
             />
             <Stack.Screen
-                name="Register"
-                component={Register}
+                name="Payment"
+                component={Payment}
                 options={{ headerShown: false }} // Remove header for PlaneSelectScreen
             />
+            {/*<Stack.Screen*/}
+            {/*    name="Register"*/}
+            {/*    component={Register}*/}
+            {/*    options={{ headerShown: false }} // Remove header for PlaneSelectScreen*/}
+            {/*/>*/}
           </Stack.Navigator>
         </NavigationContainer>
       </View>

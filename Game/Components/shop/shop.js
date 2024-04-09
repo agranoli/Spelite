@@ -2,7 +2,7 @@ import { View, StyleSheet, Image, Text, Pressable, Modal } from 'react-native';
 import { useFonts } from 'expo-font';
 import React, { useState, useEffect } from 'react';
 import Gem from "../Images/gem.png";
-import { Audio } from 'expo-av';
+// import { Audio } from 'expo-av';
 import { Svg, Path } from 'react-native-svg';
 import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
 
@@ -61,6 +61,10 @@ function Shop() {
         navigation.navigate('Menu'); // Navigate to MenuScreen when return button is pressed
     };
 
+    const handleShop = () => {
+        navigation.navigate('Payment'); // Navigate to MenuScreen when return button is pressed
+    };
+
     return (
         <>
             <View style={styles.container}>
@@ -83,7 +87,7 @@ function Shop() {
                                 style={styles.gem}
                             />
                             <Text style={styles.desc}>{item.gems} LS</Text>
-                            <Pressable style={styles.price}>
+                            <Pressable style={styles.price} onPress={handleShop}>
                                 <Text style={styles.tag}>{item.price}$</Text>
                             </Pressable>
                         </View>

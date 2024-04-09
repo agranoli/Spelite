@@ -1,8 +1,11 @@
 import React from 'react';
 import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
 import { useFonts } from 'expo-font';
+import { useNavigation } from "@react-navigation/native";
 
 const ProfileStats = () => {
+    const navigation = useNavigation();
+
     const [fontLoaded] = useFonts({
         'Kode': require('../../assets/fonts/KodeMono-VariableFont_wght.ttf'),
     });

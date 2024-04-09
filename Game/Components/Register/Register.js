@@ -54,7 +54,6 @@ const RegisterPage = (navigation) => {
                 {/* Right half: Photo */}
                 <View style={styles.photoContainer}>
                     <Image
-                        source={require('./your-photo.jpg')} // Change to the path of your photo
                         style={styles.photo}
                         resizeMode="cover"
                     />
