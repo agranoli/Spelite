@@ -10,7 +10,7 @@ const ShopIcon = () => {
     // });
     return (
         <View style={styles.main}>
-            <TouchableOpacity style={[styles.coinContainer, styles.shadowProp]}>
+            <View style={[styles.coinContainer, styles.shadowProp]}>
                 <View style={styles.currencySort}>
                     <Svg width={24} height={24} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white">
                         <Path strokeLinecap="round" strokeLinejoin="round"
@@ -27,7 +27,7 @@ const ShopIcon = () => {
                         73
                     </Text>
                 </View>
-            </TouchableOpacity>
+            </View>
             <TouchableOpacity style={[styles.shopIcon, styles.shadowProp]}>
                 <Svg width={24} height={24} viewBox="0 0 24 24" fill="none" strokeWidth={1.5} stroke="white">
                     <Path strokeLinecap="round" strokeLinejoin="round"

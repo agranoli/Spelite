@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Animated, Easing, ImageBackground } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 
-const RegisterPage = () => {
+const RegisterPage = ({navigation}) => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -33,7 +33,7 @@ const RegisterPage = () => {
         outputRange: [-300, 0],
     });
 
-    const handleRegister = () => {
+    const handleRegister = (navigation) => {
         if (!username || !email || !password) {
             alert('Please fill out all the fields');
             return;
@@ -71,6 +71,7 @@ const RegisterPage = () => {
                     </View>
                 </View>
 
+                <View style={styles.photoContainer}>
                 <View style={[styles.containerRight, { width: '65%' }]}>
                     <View style={[styles.formContainer]}>
                         <Text style={styles.title}>Register</Text>

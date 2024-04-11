@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { View, StyleSheet, Image, TouchableOpacity, ScrollView, Dimensions, Text } from 'react-native';
+import {Path, Svg} from "react-native-svg";
 
 const PlaneSelectScreen = ({ navigation }) => {
     const [selectedPlane, setSelectedPlane] = useState(0);
@@ -72,7 +73,11 @@ const PlaneSelectScreen = ({ navigation }) => {
                 style={styles.backButton}
                 onPress={() => navigation.navigate('Menu')}
             >
-                <Text style={styles.backButtonText}>Back</Text>
+                <Svg height={40} width={40} fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                     stroke="white" className="w-6 h-6">
+                    <Path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"/>
+                </Svg>
+
             </TouchableOpacity>
         </View>
     );
@@ -123,18 +128,15 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
     },
-    backButton: {
-        position: 'absolute',
-        top: 20,
-        left: 20,
-        backgroundColor: '#0096FF',
-        padding: 10,
-        borderRadius: 8,
-    },
     backButtonText: {
         color: 'white',
         fontWeight: 'bold',
     },
+    backButton: {
+        position: 'absolute',
+        top: 20,
+        right: 20
+    }
 });
 
 export default PlaneSelectScreen;

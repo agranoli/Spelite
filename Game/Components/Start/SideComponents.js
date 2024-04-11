@@ -17,7 +17,8 @@ const SideComponents = ({navigation}) => {
                     />
                 </Svg>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.button, styles.shadowProp]}>
+            <TouchableOpacity style={[styles.button, styles.shadowProp]}
+                              onPress={() => navigation.navigate('Leaderboard')}>
                 <Svg style={styles.shadowPropMin} fill="#000000" height={50} width={50} viewBox="0 0 24 24" id="podium"
                      data-name="Line Color"
                      xmlns="http://www.w3.org/2000/svg" className="icon line-color">

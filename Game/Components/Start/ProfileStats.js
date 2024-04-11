@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
 import { useFonts } from 'expo-font';
 
-const ProfileStats = () => {
+const ProfileStats = ({navigation}) => {
     // const [fontLoaded] = useFonts({
     //     'Kode': require('../../assets/fonts/KodeMono-VariableFont_wght.ttf'),
     // });
