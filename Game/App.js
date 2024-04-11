@@ -5,6 +5,9 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import MenuScreen from './Components/Start/MenuScreen';
 import PlaneSelectScreen from "./Components/PlaneSelect/PlaneSelectScreen";
+import Register from "./Components/Register/Register";
+import Login from "./Components/Login/Login";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -27,19 +30,24 @@ export default function App() {
       <View style={styles.container}>
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Menu">
+            {/*<Stack.Screen*/}
+            {/*    name="Menu"*/}
+            {/*    component={MenuScreen}*/}
+            {/*    options={{ headerShown: false }} // Remove header for MenuScreen*/}
+            {/*/>*/}
+            {/*<Stack.Screen*/}
+            {/*    name="PlaneSelect"*/}
+            {/*    component={PlaneSelectScreen}*/}
+            {/*    options={{ headerShown: false }} // Remove header for PlaneSelectScreen*/}
+            {/*/>*/}
+            {/*<Stack.Screen*/}
+            {/*    name="Register"*/}
+            {/*    component={Register}*/}
+            {/*    options={{ headerShown: false }} // Remove header for PlaneSelectScreen*/}
+            {/*/>*/}
             <Stack.Screen
-                name="Menu"
-                component={MenuScreen}
-                options={{ headerShown: false }} // Remove header for MenuScreen
-            />
-            <Stack.Screen
-                name="PlaneSelect"
-                component={PlaneSelectScreen}
-                options={{ headerShown: false }} // Remove header for PlaneSelectScreen
-            />
-            <Stack.Screen
-                name="Register"
-                component={Register}
+                name="Login"
+                component={Login}
                 options={{ headerShown: false }} // Remove header for PlaneSelectScreen
             />
           </Stack.Navigator>

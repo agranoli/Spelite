@@ -1,13 +1,13 @@
 import React from 'react';
 import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
 import { Svg, Path } from 'react-native-svg';
-import gem from "../Images/img.png";
+import gem from "../Images/gem.png";
 import { useFonts } from 'expo-font';
 
 const ShopIcon = () => {
-    const [fontLoaded] = useFonts({
-        'Kode': require('../../assets/fonts/KodeMono-VariableFont_wght.ttf'),
-    });
+    // const [fontLoaded] = useFonts({
+    //     'Kode': require('../../assets/fonts/KodeMono-VariableFont_wght.ttf'),
+    // });
     return (
         <View style={styles.main}>
             <TouchableOpacity style={[styles.coinContainer, styles.shadowProp]}>
