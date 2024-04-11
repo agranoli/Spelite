@@ -5,6 +5,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import MenuScreen from './Components/Start/MenuScreen';
 import PlaneSelectScreen from "./Components/PlaneSelect/PlaneSelectScreen";
+import Register from "./Components/Register/Register";
+import Leaderboard from "./Components/Leaderboard/Leaderboard";
 
 const Stack = createNativeStackNavigator();
 
@@ -40,6 +42,11 @@ export default function App() {
             <Stack.Screen
                 name="Register"
                 component={Register}
+                options={{ headerShown: false }} // Remove header for PlaneSelectScreen
+            />
+            <Stack.Screen
+                name="Leaderboard"
+                component={Leaderboard}
                 options={{ headerShown: false }} // Remove header for PlaneSelectScreen
             />
           </Stack.Navigator>

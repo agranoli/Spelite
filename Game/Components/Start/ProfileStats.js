@@ -2,13 +2,13 @@ import React from 'react';
 import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
 import { useFonts } from 'expo-font';
 
-const ProfileStats = () => {
-    const [fontLoaded] = useFonts({
-        'Kode': require('../../assets/fonts/KodeMono-VariableFont_wght.ttf'),
-    });
-    if (!fontLoaded) {
-        return null; // or a loading indicator
-    }
+const ProfileStats = ({navigation}) => {
+    // const [fontLoaded] = useFonts({
+    //     'Kode': require('../../assets/fonts/KodeMono-VariableFont_wght.ttf'),
+    // });
+    // if (!fontLoaded) {
+    //     return null; // or a loading indicator
+    // }
     return (
         <View style={styles.main}>
             <TouchableOpacity style={[styles.imageContainer, styles.shadowProp]}

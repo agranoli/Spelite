@@ -14,6 +14,10 @@ const MenuScreen = ({navigation}) => {
         'Kode': require('../../assets/fonts/KodeMono-VariableFont_wght.ttf'),
     });
 
+    if (!fontLoaded) {
+        return null; // or a loading indicator
+    }
+
     return (
         <View style={styles.mainScreen}>
             <Image

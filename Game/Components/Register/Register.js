@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, ScrollView, KeyboardAvoidingView, Image } from 'react-native';
 
-const RegisterPage = (navigation) => {
+const RegisterPage = ({navigation}) => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleRegister = () => {
+    const handleRegister = (navigation) => {
         // Handle registration logic here
         console.log('Username:', username);
         console.log('Email:', email);
@@ -53,11 +53,7 @@ const RegisterPage = (navigation) => {
 
                 {/* Right half: Photo */}
                 <View style={styles.photoContainer}>
-                    <Image
-                        source={require('./your-photo.jpg')} // Change to the path of your photo
-                        style={styles.photo}
-                        resizeMode="cover"
-                    />
+
                 </View>
             </View>
         </ScrollView>
