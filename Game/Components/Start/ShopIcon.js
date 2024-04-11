@@ -5,9 +5,9 @@ import gem from "../Images/gem.png";
 import { useFonts } from 'expo-font';
 
 const ShopIcon = () => {
-    const [fontLoaded] = useFonts({
-        'Kode': require('../../assets/fonts/KodeMono-VariableFont_wght.ttf'),
-    });
+    // const [fontLoaded] = useFonts({
+    //     'Kode': require('../../assets/fonts/KodeMono-VariableFont_wght.ttf'),
+    // });
     return (
         <View style={styles.main}>
             <View style={[styles.coinContainer, styles.shadowProp]}>

@@ -10,9 +10,9 @@ import StartButton from "./StartButton";
 // import { Renderer } from 'expo-three';
 
 const MenuScreen = ({navigation}) => {
-    const [fontLoaded] = useFonts({
-        'Kode': require('../../assets/fonts/KodeMono-VariableFont_wght.ttf'),
-    });
+    // const [fontLoaded] = useFonts({
+    //     'Kode': require('../../assets/fonts/KodeMono-VariableFont_wght.ttf'),
+    // });
 
     if (!fontLoaded) {
         return null; // or a loading indicator
