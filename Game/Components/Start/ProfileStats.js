@@ -1,28 +1,55 @@
-import React from 'react';
-import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
-import { useFonts } from 'expo-font';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const ProfileStats = ({navigation}) => {
-    // const [fontLoaded] = useFonts({
-    //     'Kode': require('../../assets/fonts/KodeMono-VariableFont_wght.ttf'),
-    // });
-    // if (!fontLoaded) {
-    //     return null; // or a loading indicator
-    // }
+const ProfileStats = ({ navigation }) => {
+    const [userData, setUserData] = useState(null);
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                let token = await AsyncStorage.getItem('token');
+                if (!token) {
+                    navigation.navigate('Login');
+                    return;
+                }
+
+                console.log('Token:', token);
+
+                const response = await fetch(`http://172.20.10.3:8888/getUserData.php?token=${token}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                });
+
+                if (!response.ok) {
+                    console.error('Failed to fetch user data:', response.statusText);
+                    return;
+                }
+
+                const userData = await response.json();
+                setUserData(userData);
+            } catch (error) {
+                console.error('Error fetching user data:', error.message);
+            }
+        };
+
+        fetchUserData();
+    }, [navigation]);
+
+
     return (
         <View style={styles.main}>
             <TouchableOpacity style={[styles.imageContainer, styles.shadowProp]}
                               onPress={() => navigation.navigate('Register')}>
-                <Image source={require('../Images/profile.jpeg')}
+                <Image source={{ uri: userData?.avatarUrl }} // Use user's avatarUrl for the image source
                        style={styles.imageBorder}>
                 </Image>
             </TouchableOpacity>
             <View style={[styles.levelContainer, styles.shadowProp]}>
                 <Text style={styles.profileText}>
-                   username
-                </Text>
-                <Text style={styles.profileText}>
-                    Level 4
+                    {userData?.username} {/* Use optional chaining to avoid errors if userData is null */}
                 </Text>
             </View>
         </View>
@@ -54,7 +81,8 @@ const styles = StyleSheet.create({
         marginLeft:5,
         backgroundColor: "#0096FF",
         flexDirection: "column",
-        justifyContent: "space-evenly",
+        alignItems: "center",
+        justifyContent: "center"
     },
     imageContainer: {
         width: "25%",

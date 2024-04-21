@@ -8,6 +8,7 @@ import PlaneSelectScreen from "./Components/PlaneSelect/PlaneSelectScreen";
 import Register from "./Components/Register/Register";
 import Leaderboard from "./Components/Leaderboard/Leaderboard";
 import Login from "./Components/Login/Login";
+import Shop from "./Components/shop/shop";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,21 +31,21 @@ export default function App() {
       <View style={styles.container}>
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Menu">
-            {/*<Stack.Screen*/}
-            {/*    name="Menu"*/}
-            {/*    component={MenuScreen}*/}
-            {/*    options={{ headerShown: false }} // Remove header for MenuScreen*/}
-            {/*/>*/}
-            {/*<Stack.Screen*/}
-            {/*    name="PlaneSelect"*/}
-            {/*    component={PlaneSelectScreen}*/}
-            {/*    options={{ headerShown: false }} // Remove header for PlaneSelectScreen*/}
-            {/*/>*/}
-            {/*<Stack.Screen*/}
-            {/*    name="Register"*/}
-            {/*    component={Register}*/}
-            {/*    options={{ headerShown: false }} // Remove header for PlaneSelectScreen*/}
-            {/*/>*/}
+            <Stack.Screen
+                name="Menu"
+                component={MenuScreen}
+                options={{ headerShown: false }} // Remove header for MenuScreen
+            />
+            <Stack.Screen
+                name="PlaneSelect"
+                component={PlaneSelectScreen}
+                options={{ headerShown: false }} // Remove header for PlaneSelectScreen
+            />
+            <Stack.Screen
+                name="Register"
+                component={Register}
+                options={{ headerShown: false }} // Remove header for PlaneSelectScreen
+            />
             <Stack.Screen
                 name="Login"
                 component={Login}
@@ -53,6 +54,11 @@ export default function App() {
             <Stack.Screen
                 name="Leaderboard"
                 component={Leaderboard}
+                options={{ headerShown: false }} // Remove header for PlaneSelectScreen
+            />
+            <Stack.Screen
+                name="Shop"
+                component={Shop}
                 options={{ headerShown: false }} // Remove header for PlaneSelectScreen
             />
           </Stack.Navigator>

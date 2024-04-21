@@ -5,6 +5,7 @@ import ProfileStats from "./ProfileStats";
 import ShopIcon from "./ShopIcon";
 import SideComponents from "./SideComponents";
 import StartButton from "./StartButton";
+import SelectedPlane from "./SelectedPlane";
 // import { ModelView } from 'react-native-3d-model-view';
 // import { GLView } from 'expo-gl';
 // import { Renderer } from 'expo-three';
@@ -14,9 +15,9 @@ const MenuScreen = ({navigation}) => {
     //     'Kode': require('../../assets/fonts/KodeMono-VariableFont_wght.ttf'),
     // });
 
-    if (!fontLoaded) {
-        return null; // or a loading indicator
-    }
+    // if (!fontLoaded) {
+    //     return null; // or a loading indicator
+    // }
 
     return (
         <View style={styles.mainScreen}>
@@ -24,6 +25,9 @@ const MenuScreen = ({navigation}) => {
                 source={require('../Images/background.jpeg')}
                 style={styles.background}
             />
+            <View style={styles.centerPlane}>
+                <SelectedPlane />
+            </View>
             <ProfileStats navigation={navigation}/>
             <ShopIcon />
             <SideComponents navigation={navigation} />
@@ -44,6 +48,11 @@ const styles = StyleSheet.create({
         flex: 1,
         height: "100%",
         fontFamily: "Kode"
+    },
+    centerPlane:{
+        flex:1,
+        alignItems:"center",
+        justifyContent: "center"
     },
     background: {
         flex: 1,

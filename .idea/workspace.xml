@@ -5,7 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0fbc1e8-fe68-426d-9990-abebf861d2f7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Game/Components/Start/SelectedPlane.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/Game/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game/Components/Login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/Game/Components/Login/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game/Components/PlaneSelect/PlaneSelectScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/Game/Components/PlaneSelect/PlaneSelectScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game/Components/Register/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/Game/Components/Register/Register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game/Components/Start/MenuScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/Game/Components/Start/MenuScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game/Components/Start/ProfileStats.js" beforeDir="false" afterPath="$PROJECT_DIR$/Game/Components/Start/ProfileStats.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game/Components/Start/ShopIcon.js" beforeDir="false" afterPath="$PROJECT_DIR$/Game/Components/Start/ShopIcon.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game/Components/shop/shop.js" beforeDir="false" afterPath="$PROJECT_DIR$/Game/Components/shop/shop.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Game/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Game/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,28 +26,28 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2erHI7wkuhFxQTfNxQBFuFB70bX" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "register",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;register&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Applications/WebStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Game/assets/fonts" />
@@ -52,6 +63,8 @@
       <option name="presentableId" value="Default" />
       <updated>1712655695761</updated>
       <workItem from="1712655698607" duration="9542000" />
+      <workItem from="1712822245536" duration="8249000" />
+      <workItem from="1713101389821" duration="9101000" />
     </task>
     <servers />
   </component>

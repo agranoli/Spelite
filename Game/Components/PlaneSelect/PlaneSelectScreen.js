@@ -27,6 +27,8 @@ const PlaneSelectScreen = ({ navigation }) => {
         });
     };
 
+    
+
     const planeImages = [
         require('../Images/plane1.png'),
         require('../Images/plane2.png'),

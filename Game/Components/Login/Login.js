@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Animated, Easing, ImageBackground } from 'react-native';
+import {View, Text, TextInput, Button, StyleSheet, Animated, Easing, ImageBackground, TouchableOpacity} from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
+import { Path, Svg } from "react-native-svg";
+import axios from 'axios'; // Import Axios
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
 
-const LoginPage = () => {
-    const [email, setEmail] = useState('');
+const LoginPage = ({ navigation }) => {
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [animation] = useState(new Animated.Value(0));
 
@@ -32,16 +35,28 @@ const LoginPage = () => {
         outputRange: [-300, 0],
     });
 
-    const handleLogin = () => {
-        if (!email || !password) {
+    const handleLogin = async () => {
+        if (!username || !password) {
             alert('Please fill out all the fields');
             return;
         }
 
-        // Handle login logic here
-        console.log('Email:', email);
-        console.log('Password:', password);
-        // You can add your login API call here
+        try {
+            const response = await axios.post('http://172.20.10.3:8888/login.php', {
+                username,
+                password
+            });
+            console.log('Login response:', response.data);
+
+            if (response.data.token) {
+                await AsyncStorage.setItem('token', response.data.token);
+                navigation.navigate('Menu');
+            } else {
+                console.error('Token not found in login response');
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+        }
     };
 
     return (
@@ -49,21 +64,27 @@ const LoginPage = () => {
             source={require('../Images/background.jpeg')}
             style={styles.backgroundImage}
         >
+            <TouchableOpacity
+                style={styles.backButton}
+                onPress={() => navigation.navigate('Menu')}
+            >
+                <Svg height={40} width={40} fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                     stroke="white" className="w-6 h-6">
+                    <Path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"/>
+                </Svg>
+            </TouchableOpacity>
             <Animated.View style={[styles.container, { transform: [{ translateX }] }]}>
                 <View style={styles.formContainer}>
                     <Text style={styles.title}>Login</Text>
-
                     <View style={styles.inputContainer}>
-                        <Text style={styles.label}>Email</Text>
+                        <Text style={styles.label}>Username</Text>
                         <TextInput
                             style={[styles.input, { width: '100%' }]}
-                            placeholder="Enter your email"
-                            value={email}
-                            onChangeText={(text) => setEmail(text)}
-                            keyboardType="email-address"
+                            placeholder="Enter your username"
+                            value={username}
+                            onChangeText={(text) => setUsername(text)}
                         />
                     </View>
-
                     <View style={styles.inputContainer}>
                         <Text style={styles.label}>Password</Text>
                         <TextInput
@@ -74,7 +95,6 @@ const LoginPage = () => {
                             secureTextEntry
                         />
                     </View>
-
                     {/* Login Button */}
                     <View style={[styles.inputContainer, { marginBottom: 20 }]}>
                         <Button title="Login" onPress={handleLogin} color="orange" />
@@ -131,6 +151,11 @@ const styles = StyleSheet.create({
         borderColor: 'orange',
         width: '100%',
     },
+    backButton: {
+        position: 'absolute',
+        top: 20,
+        right: 20
+    }
 });
 
 export default LoginPage;
