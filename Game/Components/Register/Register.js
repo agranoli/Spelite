@@ -96,6 +96,22 @@ const RegisterPage = ({ navigation }) => {
         postData();
     };
 
+    const handleLogout = () => {
+        // Clear user data, session, or authentication token (if applicable)
+        setUsername('');
+        setEmail('');
+        setPassword('');
+        setConfirmPassword('');
+        setAvatarURL('');
+        setPlane(1);
+        setCoins(0);
+        setPremium_coins(0);
+
+        // Navigate to the login screen
+        navigation.navigate('Menu');
+    };
+
+
     return (
         <ImageBackground
             source={require('../Images/background.jpeg')}
@@ -107,6 +123,10 @@ const RegisterPage = ({ navigation }) => {
                         <Text style={styles.gameText}>
                             Hello, welcome to our endless runner game lets fly pilot !!
                         </Text>
+                        {/* Logout button */}
+                        <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+                            <Text style={styles.logoutButtonText}>Logout</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
                 <TouchableOpacity
@@ -264,6 +284,19 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#fff', // Set text color to white
         textAlign: 'center', // Center-align the game text
+    },
+    logoutButton: {
+        backgroundColor: 'orange',
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+        borderRadius: 8,
+        marginTop: 10,
+    },
+    logoutButtonText: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 16,
+        textAlign: 'center',
     },
     backButton: {
         position: 'absolute',

@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { View, StyleSheet, Image, TouchableOpacity, ScrollView, Dimensions, Text } from 'react-native';
-import {Path, Svg} from "react-native-svg";
+import { Path, Svg } from "react-native-svg";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const PlaneSelectScreen = ({ navigation }) => {
     const [selectedPlane, setSelectedPlane] = useState(0);
@@ -11,23 +12,30 @@ const PlaneSelectScreen = ({ navigation }) => {
     const planeHeight = screenHeight * 0.6;
     const smallPlaneWidth = screenWidth * 0.3;
     const smallPlaneHeight = planeHeight * 0.5;
-    const padding = (screenWidth - planeWidth) / 2; // Calculate the padding
+    const padding = (screenWidth - planeWidth) / 2;
 
     const handleScroll = (event) => {
         const contentOffsetX = event.nativeEvent.contentOffset.x;
-        const newSelectedPlane = Math.round(contentOffsetX / (planeWidth + 20)); // Adjust this value according to your needs
+        const newSelectedPlane = Math.round(contentOffsetX / (planeWidth + 20));
         setSelectedPlane(newSelectedPlane);
     };
 
-    const handlePlaneSelect = (index) => {
+    const handlePlaneSelect = async (index) => {
         setSelectedPlane(index);
         scrollViewRef.current.scrollTo({
-            x: (index * (planeWidth + 20)), // Adjust this value according to your needs
+            x: index * (planeWidth + 20),
             animated: true
         });
+
+        try {
+            // Save the selected plane index to AsyncStorage
+            await AsyncStorage.setItem('selectedPlane', String(index));
+            console.log('Selected plane index saved:', index);
+        } catch (error) {
+            console.error('Error saving selected plane:', error);
+        }
     };
 
-    
 
     const planeImages = [
         require('../Images/plane1.png'),
@@ -45,13 +53,14 @@ const PlaneSelectScreen = ({ navigation }) => {
             />
             <ScrollView
                 horizontal
-                contentContainerStyle={{...styles.scrollView, paddingHorizontal: padding}} // Add padding to the scroll view
+                contentContainerStyle={{ ...styles.scrollView, paddingHorizontal: padding }}
                 showsHorizontalScrollIndicator={false}
                 ref={scrollViewRef}
-                snapToInterval={planeWidth + 20} // Adjust this value according to your needs
+                snapToInterval={planeWidth + 20}
                 decelerationRate="fast"
+                scrollEventThrottle={16} // Receive all scroll events
                 scrollEnabled={selectedPlane !== null}
-                onScroll={handleScroll} // Use onScroll instead of onMomentumScrollEnd
+                onScroll={handleScroll}
                 pagingEnabled
             >
                 {planeImages.map((image, index) => (
@@ -64,7 +73,7 @@ const PlaneSelectScreen = ({ navigation }) => {
                             <Image source={image} style={[styles.planeImage, { height: index === selectedPlane ? planeHeight : smallPlaneHeight }]} />
                         </TouchableOpacity>
                         {index === selectedPlane && (
-                            <TouchableOpacity style={styles.selectButton} onPress={() => console.log('Plane selected')}>
+                            <TouchableOpacity style={styles.selectButton} onPress={() => handlePlaneSelect(index)}>
                                 <Text style={styles.selectButtonText}>Select</Text>
                             </TouchableOpacity>
                         )}
@@ -77,9 +86,8 @@ const PlaneSelectScreen = ({ navigation }) => {
             >
                 <Svg height={40} width={40} fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                      stroke="white" className="w-6 h-6">
-                    <Path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"/>
+                    <Path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                 </Svg>
-
             </TouchableOpacity>
         </View>
     );
@@ -113,7 +121,7 @@ const styles = StyleSheet.create({
     planeImageContainer: {
         borderRadius: 10,
         overflow: 'hidden',
-        margin: 10, // Added margin to create space between images
+        margin: 10,
     },
     planeImage: {
         width: '100%',

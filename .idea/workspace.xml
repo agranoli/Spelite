@@ -5,18 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0fbc1e8-fe68-426d-9990-abebf861d2f7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Game/Components/Start/SelectedPlane.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/Game/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game/Components/Login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/Game/Components/Login/Login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Game/Components/PlaneSelect/PlaneSelectScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/Game/Components/PlaneSelect/PlaneSelectScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Game/Components/Register/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/Game/Components/Register/Register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game/Components/Start/MenuScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/Game/Components/Start/MenuScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game/Components/Start/ProfileStats.js" beforeDir="false" afterPath="$PROJECT_DIR$/Game/Components/Start/ProfileStats.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game/Components/Start/ShopIcon.js" beforeDir="false" afterPath="$PROJECT_DIR$/Game/Components/Start/ShopIcon.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game/Components/shop/shop.js" beforeDir="false" afterPath="$PROJECT_DIR$/Game/Components/shop/shop.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Game/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Game/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game/Components/Start/SelectedPlane.js" beforeDir="false" afterPath="$PROJECT_DIR$/Game/Components/Start/SelectedPlane.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +56,7 @@
       <updated>1712655695761</updated>
       <workItem from="1712655698607" duration="9542000" />
       <workItem from="1712822245536" duration="8249000" />
-      <workItem from="1713101389821" duration="9101000" />
+      <workItem from="1713101389821" duration="15287000" />
     </task>
     <servers />
   </component>
