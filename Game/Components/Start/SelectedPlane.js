@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 
 const SelectedPlane = ({ route }) => {
-    const { selectedPlaneIndex } = route.params;
+    console.log("Route:", route); // Add this line to check the route object
+    const selectedImageIndex = route?.params?.selectedImageIndex ?? 0; // Use optional chaining and nullish coalescing
 
     const [planeImage, setPlaneImage] = useState(null);
 
@@ -15,12 +16,12 @@ const SelectedPlane = ({ route }) => {
             require('../Images/plane5.png'),
         ];
 
-        if (selectedPlaneIndex >= 0 && selectedPlaneIndex < planeImages.length) {
-            setPlaneImage(planeImages[selectedPlaneIndex]);
+        if (selectedImageIndex >= 0 && selectedImageIndex < planeImages.length) {
+            setPlaneImage(planeImages[selectedImageIndex]);
         } else {
-            setPlaneImage(null); // No image for invalid plane index
+            setPlaneImage(null); // No image for invalid index
         }
-    }, [selectedPlaneIndex]);
+    }, [selectedImageIndex]);
 
     return (
         <View style={styles.main}>

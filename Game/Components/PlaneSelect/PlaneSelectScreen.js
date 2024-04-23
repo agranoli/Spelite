@@ -1,10 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Image, TouchableOpacity, ScrollView, Dimensions, Text } from 'react-native';
 import { Path, Svg } from "react-native-svg";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import SelectedPlane from '../Start/SelectedPlane'; // Import the SelectedPlane component
 
 const PlaneSelectScreen = ({ navigation }) => {
-    const [selectedPlane, setSelectedPlane] = useState(0);
+    const [selectedPlaneIndex, setSelectedPlaneIndex] = useState(0);
     const scrollViewRef = useRef(null);
     const screenWidth = Dimensions.get('window').width;
     const screenHeight = Dimensions.get('window').height;
@@ -17,15 +18,11 @@ const PlaneSelectScreen = ({ navigation }) => {
     const handleScroll = (event) => {
         const contentOffsetX = event.nativeEvent.contentOffset.x;
         const newSelectedPlane = Math.round(contentOffsetX / (planeWidth + 20));
-        setSelectedPlane(newSelectedPlane);
+        setSelectedPlaneIndex(newSelectedPlane);
     };
 
     const handlePlaneSelect = async (index) => {
-        setSelectedPlane(index);
-        scrollViewRef.current.scrollTo({
-            x: index * (planeWidth + 20),
-            animated: true
-        });
+        setSelectedPlaneIndex(index);
 
         try {
             // Save the selected plane index to AsyncStorage
@@ -35,7 +32,6 @@ const PlaneSelectScreen = ({ navigation }) => {
             console.error('Error saving selected plane:', error);
         }
     };
-
 
     const planeImages = [
         require('../Images/plane1.png'),
@@ -47,10 +43,7 @@ const PlaneSelectScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Image
-                source={require('../Images/background.jpeg')}
-                style={styles.background}
-            />
+            {/* Your plane selection UI */}
             <ScrollView
                 horizontal
                 contentContainerStyle={{ ...styles.scrollView, paddingHorizontal: padding }}
@@ -80,15 +73,7 @@ const PlaneSelectScreen = ({ navigation }) => {
                     </View>
                 ))}
             </ScrollView>
-            <TouchableOpacity
-                style={styles.backButton}
-                onPress={() => navigation.navigate('Menu')}
-            >
-                <Svg height={40} width={40} fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                     stroke="white" className="w-6 h-6">
-                    <Path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
-                </Svg>
-            </TouchableOpacity>
+            <SelectedPlane selectedImageIndex={selectedPlaneIndex} /> {/* Pass the selected plane index */}
         </View>
     );
 };
@@ -99,15 +84,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         width: "100%",
         height: "100%"
-    },
-    background: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        resizeMode: 'cover',
-        opacity: 0.95,
     },
     scrollView: {
         flexGrow: 1,
@@ -138,15 +114,6 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
     },
-    backButtonText: {
-        color: 'white',
-        fontWeight: 'bold',
-    },
-    backButton: {
-        position: 'absolute',
-        top: 20,
-        right: 20
-    }
 });
 
 export default PlaneSelectScreen;
