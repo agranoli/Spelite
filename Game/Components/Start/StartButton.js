@@ -1,8 +1,8 @@
 import React from 'react';
 import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
-const StartButton = () => {
+const StartButton = ({navigation}) => {
     return (
-        <TouchableOpacity style={[styles.button, styles.shadowProp]}>
+        <TouchableOpacity onPress={() => navigation.navigate('Game')} style={[styles.button, styles.shadowProp]}>
             <Text style={styles.ButtonText}>Start</Text>
         </TouchableOpacity>
     );
@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     ButtonText:{
         color: 'white',
         fontSize: 30,
+        fontFamily: "Kode"
     }
 })
 

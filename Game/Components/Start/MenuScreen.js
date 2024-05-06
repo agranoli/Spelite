@@ -14,6 +14,10 @@ const MenuScreen = ({navigation}) => {
         'Kode': require('../../assets/fonts/KodeMono-VariableFont_wght.ttf'),
     });
 
+    if (!fontLoaded) {
+        return null; // or a loading indicator
+    }
+
     return (
         <View style={styles.mainScreen}>
             <Image
@@ -39,7 +43,6 @@ const styles = StyleSheet.create({
     mainScreen: {
         flex: 1,
         height: "100%",
-        fontFamily: "Kode"
     },
     background: {
         flex: 1,

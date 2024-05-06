@@ -3,8 +3,8 @@ import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
 import { useFonts } from 'expo-font';
 import { useNavigation } from "@react-navigation/native";
 
-const ProfileStats = () => {
-    const navigation = useNavigation();
+const ProfileStats = ({navigation}) => {
+    // const navigation = useNavigation();
 
     const [fontLoaded] = useFonts({
         'Kode': require('../../assets/fonts/KodeMono-VariableFont_wght.ttf'),
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         flex:1,
         flexDirection: "row",
         justifyContent: "space-between",
-        fontFamily: "Kode"
+        fontFamily: 'Kode',
     },
     imageBorder: {
         borderWidth: 3,
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     },
     profileText: {
         fontWeight: "bold",
+        fontFamily: 'Kode',
         fontSize: 15,
         marginLeft: 5,
     },

@@ -14,9 +14,8 @@ const PaymentScreen = ({ selectedItem, onClose }) => {
         try {
             const response = await axios.post('YOUR_BACKEND_URL/payment', {
                 email,
-                amount: selectedItem.price * 100, // Stripe accepts amount in cents
-                currency: 'usd',
-                // Include any other necessary payment information
+                amount: selectedItem.price * 100,
+                currency: 'eur',
             });
 
             console.log('Payment successful:', response.data);
