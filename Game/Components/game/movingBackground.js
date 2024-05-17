@@ -9,7 +9,7 @@ const MovingImage = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setPositionX(prevX => {
-                let newPosition = prevX - 5; // Move image to the left
+                let newPosition = prevX - 3; // Move image to the left
 
                 // Reset position to create a seamless loop
                 if (newPosition <= -screenWidth) {

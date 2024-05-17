@@ -1,10 +1,7 @@
-// PlaneGame.js
-
-import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Image, Text, TouchableWithoutFeedback, Dimensions } from 'react-native';
-import MovingImage from "./movingBackground";
+import React, { useEffect, useState } from 'react';
+import { Dimensions, Image, StyleSheet, Text, TouchableWithoutFeedback, View, Button } from 'react-native';
+import MovingImage from './movingBackground';
 import { Audio } from 'expo-av';
-import FlyingObject from './flyingObjects'; // Import the FlyingObject component
 
 const PlaneGame = () => {
     const [positionY, setPositionY] = useState(200);
@@ -12,7 +9,12 @@ const PlaneGame = () => {
     const [movingUp, setMovingUp] = useState(false);
     const [soundObject, setSoundObject] = useState(null);
     const [moveInterval, setMoveInterval] = useState(null);
-    const [objects, setObjects] = useState([]); // Store flying objects
+    const [lives, setLives] = useState(3);
+    const [score, setScore] = useState(0);
+    const [obstacles, setObstacles] = useState([]);
+    const [isPaused, setIsPaused] = useState(false);
+    const [collisionCooldown, setCollisionCooldown] = useState(false);
+    const [GameOver, setGameOver] = useState(false);
 
     useEffect(() => {
         const playBackgroundMusic = async () => {
@@ -37,101 +39,219 @@ const PlaneGame = () => {
         };
     }, []);
 
-    const movePlaneUp = () => {
-        setMovingUp(true);
-        clearInterval(moveInterval);
+    useEffect(() => {
+        const scoreInterval = setInterval(() => {
+            if (!isPaused) {
+                setScore(prevScore => prevScore + 1);
+            }
+        }, 1000);
 
-        const interval = setInterval(() => {
-            setPositionY(prevY => Math.max(prevY + 5, 60)); // Adjusted to prevent going off-screen
-        }, 5);
-        setMoveInterval(interval);
+        return () => clearInterval(scoreInterval);
+    }, [isPaused]);
+
+    useEffect(() => {
+        const generateObstacle = () => {
+            return setInterval(() => {
+                if (!isPaused) {
+                    const newObstacle = {
+                        id: Date.now(),
+                        x: Dimensions.get('window').width,
+                        y: Math.random() * (Dimensions.get('window').height - 50), // Adjust the 50 based on obstacle size
+                        width: 50, // Assuming obstacle width
+                        height: 50, // Assuming obstacle height
+                    };
+                    setObstacles(prevObstacles => [...prevObstacles, newObstacle]);
+                }
+            }, Math.random() * 2000 + 2000); // Random interval between 2000ms and 4000ms
+        };
+
+        const obstacleInterval = generateObstacle();
+
+        return () => clearInterval(obstacleInterval); // Clear interval on component unmount
+    }, [isPaused]);
+
+    useEffect(() => {
+        const moveObstacles = setInterval(() => {
+            if (!isPaused) {
+                setObstacles(prevObstacles =>
+                    prevObstacles.map(obstacle => {
+                        const newX = obstacle.x - 5;
+                        return { ...obstacle, x: newX };
+                    }).filter(obstacle => obstacle.x > -obstacle.width)
+                );
+            }
+        }, 30);
+
+        return () => clearInterval(moveObstacles);
+    }, [isPaused]);
+
+    useEffect(() => {
+        if (!isPaused && !collisionCooldown) {
+            obstacles.forEach(obstacle => {
+                checkCollision(obstacle);
+            });
+        }
+    }, [obstacles, isPaused, collisionCooldown]);
+
+    const handleCollision = (collidedObstacle) => {
+        if (!collisionCooldown) {
+            setLives(prevLives => prevLives - 1);
+            setCollisionCooldown(true);
+            setTimeout(() => {
+                setCollisionCooldown(false);
+            }, 1000); // 1 second cooldown
+
+            setObstacles(prevObstacles => prevObstacles.filter(obstacle => obstacle.id !== collidedObstacle.id));
+
+            if (lives <= 1) {
+                // Game over logic
+                resetGame();
+            }
+        }
+    };
+
+    const quitToMenu = () => {
+
+    };
+    const checkCollision = (obstacle) => {
+        if (!isPaused && !collisionCooldown) {
+            const planeTop = positionY;
+            const planeBottom = positionY + 40; // Assuming plane height is 40
+            const planeLeft = positionX;
+            const planeRight = positionX + 150; // Assuming plane width is 150
+
+            const obstacleTop = obstacle.y;
+            const obstacleBottom = obstacle.y + obstacle.height;
+            const obstacleLeft = obstacle.x;
+            const obstacleRight = obstacle.x + obstacle.width;
+
+            const corners = [
+                [planeLeft, planeTop],
+                [planeLeft, planeBottom],
+                [planeRight, planeTop],
+                [planeRight, planeBottom]
+            ];
+
+            for (let i = 0; i < corners.length; i++) {
+                const [cornerX, cornerY] = corners[i];
+                if (cornerX >= obstacleLeft && cornerX <= obstacleRight && cornerY >= obstacleTop && cornerY <= obstacleBottom) {
+                    console.log('Collision detected!');
+                    handleCollision(obstacle);
+                    return;
+                }
+            }
+        }
+    };
+
+
+
+    // const gameOver = () => {
+    //     setGameOver(true);
+    //     setIsPaused(true);
+    // };
+
+    const resetGame = () => {
+        setLives(3);
+        setScore(0);
+        setObstacles([]);
+        setIsPaused(true);
+        // gameOver();
+    };
+
+
+    const movePlaneUp = () => {
+        if (!isPaused) {
+            setMovingUp(true);
+            clearInterval(moveInterval);
+
+            const interval = setInterval(() => {
+                setPositionY(prevY => Math.max(prevY - 5, 0));
+            }, 5);
+            setMoveInterval(interval);
+        }
     };
 
     const movePlaneDown = () => {
-        setMovingUp(false);
-        clearInterval(moveInterval);
+        if (!isPaused) {
+            setMovingUp(false);
+            clearInterval(moveInterval);
 
-        const interval = setInterval(() => {
-            setPositionY(prevY => Math.min(prevY - 5, screenHeight - 140)); // Adjusted to prevent going off-screen
-        }, 5);
-        setMoveInterval(interval);
+            const interval = setInterval(() => {
+                setPositionY(prevY => Math.min(prevY + 5, Dimensions.get('window').height - 40));
+            }, 5);
+            setMoveInterval(interval);
+        }
     };
-
 
     const handlePressIn = () => {
-        movePlaneUp();
-    };
-
-    const handlePressOut = () => {
         movePlaneDown();
     };
 
-    // useEffect(() => {
-    //     // Add flying objects
-    //     const interval = setInterval(() => {
-    //         const newObjects = [...objects];
-    //         newObjects.push({
-    //             id: newObjects.length,
-    //             positionX: Dimensions.get('window').width,
-    //             positionY: Math.floor(Math.random() * (Dimensions.get('window').height - 100)),
-    //             speed: Math.floor(Math.random() * 5) + 1, // Random speed between 1 and 5
-    //         });
-    //         setObjects(newObjects);
-    //     }, 3000); // Adjust the interval as needed to control the frequency of flying objects
-    //
-    //     return () => clearInterval(interval);
-    // }, []);
-
-    const handleCollision = (objectId) => {
-        // Remove the collided object from the objects array
-        setObjects(objects.filter(obj => obj.id !== objectId));
+    const handlePressOut = () => {
+        movePlaneUp();
     };
 
-    const screenHeight = Dimensions.get('window').height;
-    const screenWidth = Dimensions.get('window').width;
-
-    const clampedY = Math.min(Math.max(positionY, 40), screenHeight - 100);
-    const clampedX = Math.min(Math.max(positionX, 0), screenWidth - 150);
+    const handleTogglePause = () => {
+        setIsPaused(prevState => !prevState);
+    };
 
     return (
-<>
-        <View style={styles.header}>
-            <Text style={styles.score}>Score: 00000</Text>
-            <View style={styles.row}>
-                <Image source={require('../Images/gem.png')} style={styles.life}/>
-                <Image source={require('../Images/gem.png')} style={styles.life}/>
-                <Image source={require('../Images/gem.png')} style={styles.life}/>
+        <>
+            <View style={styles.header}>
+                <Text style={styles.score}>Score: {String(score).padStart(5, '0')}</Text>
+                <View style={styles.row}>
+                    {[...Array(lives)].map((_, index) => (
+                        <Image key={`life_${index}`} source={require('../Images/gem.png')} style={styles.life} />
+                    ))}
+                </View>
+                <Button style={styles.pauseBtn} title={isPaused ? 'Resume' : 'Pause'} onPress={handleTogglePause} />
             </View>
-        </View>
-        <TouchableWithoutFeedback onPressIn={handlePressIn} onPressOut={handlePressOut}>
-            <View style={styles.container}>
-
-                <MovingImage />
-                {/* Render flying objects */}
-                {/*{objects.map(obj => (*/}
-                {/*    <FlyingObject*/}
-                {/*        key={obj.id}*/}
-                {/*        initialPositionX={obj.positionX}*/}
-                {/*        initialPositionY={obj.positionY}*/}
-                {/*        speed={obj.speed}*/}
-                {/*        onCollision={() => handleCollision(obj.id)}*/}
-                {/*    />*/}
-                {/*))}*/}
-                <Image
-                    source={require('../Images/plane2.png')}
-                    style={[
-                        styles.plane,
-                        {
-                            bottom: clampedY,
-                            left: clampedX,
-                            transform: [{ rotate: movingUp ? '-15deg' : '15deg' }],
-                        },
-                    ]}
-                />
-            </View>
-        </TouchableWithoutFeedback>
-</>
-
+            {isPaused && (
+                <View style={styles.pauseOverlay}>
+                    <Text style={styles.pauseText}>Game Paused</Text>
+                </View>
+            )}
+            <TouchableWithoutFeedback onPressIn={handlePressIn} onPressOut={handlePressOut}>
+                <View style={styles.container}>
+                    <MovingImage />
+                    <Image
+                        source={require('../Images/plane2.png')}
+                        style={[
+                            styles.plane,
+                            {
+                                bottom: positionY,
+                                left: positionX,
+                                transform: [{ rotate: movingUp ? '15deg' : '-15deg' }],
+                            },
+                        ]}
+                    />
+                    {/* Render obstacles */}
+                    {obstacles.map(obstacle => (
+                        <View
+                            key={obstacle.id}
+                            style={[
+                                styles.obstacle,
+                                {
+                                    left: obstacle.x,
+                                    top: obstacle.y,
+                                    width: obstacle.width,
+                                    height: obstacle.height,
+                                },
+                            ]}
+                        />
+                    ))}
+                    {GameOver && (
+                        <View style={styles.gameOverScreen}>
+                            <Text style={styles.gameOverText}>Game Over</Text>
+                            <View style={styles.buttonContainer}>
+                                <Button title="Restart" onPress={resetGame} />
+                                <Button title="Quit to Menu" onPress={quitToMenu} />
+                            </View>
+                        </View>
+                    )}
+                </View>
+            </TouchableWithoutFeedback>
+        </>
     );
 };
 
@@ -141,16 +261,32 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    life:{
-        width: 80,
-        height: 30,
-        top: 10,
+    life: {
+        width: 50,
+        height: 50,
+        top: 3,
         opacity: 1,
     },
-    row:{
+    gameOverScreen: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 3, // Change zIndex to 3 to ensure it appears above other elements
+    },
+    gameOverText: {
+        fontSize: 30,
+        color: 'white',
+        marginBottom: 20,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+    },
+    row: {
         flex: 1,
-        flexDirection: "row",
-        justifyContent: "center",
+        flexDirection: 'row',
+        justifyContent: 'center',
         width: 100,
         left: 200,
     },
@@ -158,26 +294,45 @@ const styles = StyleSheet.create({
         width: 150,
         height: 40,
         position: 'absolute',
-        borderWidth: 2,
-        borderColor: 'red',
     },
     header: {
         flex: 1,
         position: 'absolute',
-        backgroundColor: "transparent",
-        width: "100%",
+        backgroundColor: 'transparent',
+        width: '100%',
         height: 50,
-        flexDirection: "row",
-        justifyContent: "space-around",
+        flexDirection: 'row',
+        justifyContent: 'space-around',
         zIndex: 1,
     },
-    score:{
+    score: {
         fontSize: 25,
-        color: "darkorange",
+        color: 'darkorange',
         marginLeft: 100,
         top: 10,
-        position: "absolute",
-    }
+        position: 'absolute',
+    },
+    pauseOverlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 2,
+    },
+    pauseText: {
+        fontSize: 30,
+        color: 'white',
+    },
+    pauseBtn: {
+        flex: 1,
+        fontSize: 30,
+        marginRight: 100,
+        zIndex: 3,
+    },
+    obstacle: {
+        position: 'absolute',
+        backgroundColor: 'red',
+    },
 });
 
 export default PlaneGame;

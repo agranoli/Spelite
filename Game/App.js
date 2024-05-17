@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
-import {NavigationContainer, useNavigation} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import 'react-native-reanimated'
 import MenuScreen from './Components/Start/MenuScreen';
-import PlaneSelectScreen from "./Components/PlaneSelect/PlaneSelectScreen";
-import Register from "./Components/Register/Register";
 import Shop from "./Components/shop/shop";
 import Payment from "./Components/payment";
 import Game from "./Components/game/game";
@@ -32,37 +31,22 @@ export default function App() {
   return (
       <View style={styles.container}>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Menu">
-            {/*<Stack.Screen*/}
-            {/*    name="Menu"*/}
-            {/*    component={MenuScreen}*/}
-            {/*    options={{ headerShown: false }} // Remove header for MenuScreen*/}
-            {/*/>*/}
-            {/*<Stack.Screen*/}
-            {/*    name="Shop"*/}
-            {/*    component={Shop}*/}
-            {/*    options={{ headerShown: false }} // Remove header for MenuScreen*/}
-            {/*/>*/}
-            {/*<Stack.Screen*/}
-            {/*    name="PlaneSelect"*/}
-            {/*    component={PlaneSelectScreen}*/}
-            {/*    options={{ headerShown: false }} // Remove header for PlaneSelectScreen*/}
-            {/*/>*/}
-            {/*<Stack.Screen*/}
-            {/*    name="Payment"*/}
-            {/*    component={Payment}*/}
-            {/*    options={{ headerShown: false }} // Remove header for PlaneSelectScreen*/}
-            {/*/>*/}
+          <Stack.Navigator initialRouteName="Game">
+            <Stack.Screen
+                name="Shop"
+                component={Shop}
+                options={{ headerShown: false }} // Remove header for Shop
+            />
+            <Stack.Screen
+                name="Payment"
+                component={Payment}
+                options={{ headerShown: false }} // Remove header for Payment
+            />
             <Stack.Screen
                 name="Game"
                 component={Game}
-                options={{ headerShown: false }} // Remove header for PlaneSelectScreen
+                options={{ headerShown: false }} // Remove header for Payment
             />
-            {/*<Stack.Screen*/}
-            {/*    name="Register"*/}
-            {/*    component={Register}*/}
-            {/*    options={{ headerShown: false }} // Remove header for PlaneSelectScreen*/}
-            {/*/>*/}
           </Stack.Navigator>
         </NavigationContainer>
       </View>

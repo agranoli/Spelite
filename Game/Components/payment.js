@@ -1,75 +1,69 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-import {useNavigation} from "@react-navigation/native";
-// import axios from 'axios';
+import { View, Text, TextInput, Button, StyleSheet, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native'; // Import Platform from react-native
+import { useNavigation } from '@react-navigation/native';
+import axios from 'axios'; // Don't forget to import axios
 
-const PaymentScreen = ({ selectedItem, onClose }) => {
+const PaymentScreen = ({ selectedItem }) => {
+    const navigation = useNavigation();
+    console.log(selectedItem);
     const [email, setEmail] = useState('');
     const [cardNumber, setCardNumber] = useState('');
     const [expiry, setExpiry] = useState('');
     const [cvc, setCVC] = useState('');
-    const navigation = useNavigation();
-
-    const handlePayment = async () => {
-        try {
-            const response = await axios.post('YOUR_BACKEND_URL/payment', {
-                email,
-                amount: selectedItem.price * 100,
-                currency: 'eur',
-            });
-
-            console.log('Payment successful:', response.data);
-            // Handle successful payment
-        } catch (error) {
-            console.error('Payment error:', error);
-            // Handle payment error
-        }
-    };
 
     const handleClose = () => {
-        navigation.navigate('Shop'); // Navigate to MenuScreen when return button is pressed
+        navigation.navigate('Shop');
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Payment Details</Text>
-            <Text style={styles.item}>Selected: {selectedItem && selectedItem.gems} LS</Text>
-            <Text style={styles.item}>Total amount: {selectedItem && selectedItem.price}$</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Email"
-                value={email}
-                onChangeText={setEmail}
-            />
-            <View style={styles.cardContainer}>
-                <View style={styles.cardRow}>
-                    <TextInput
-                        style={[styles.input, styles.cardInput]}
-                        placeholder="Card Number"
-                        value={cardNumber}
-                        onChangeText={setCardNumber}
-                    />
-                </View>
-                <View style={styles.cardRow}>
-                    <TextInput
-                        style={[styles.input, styles.cardInput]}
-                        placeholder="MM/YY"
-                        value={expiry}
-                        onChangeText={setExpiry}
-                    />
-                    <TextInput
-                        style={[styles.input, styles.cardInput]}
-                        placeholder="CVC"
-                        value={cvc}
-                        onChangeText={setCVC}
-                    />
-                </View>
-            </View>
-            <View style={styles.buttons}>
-                <Button title="Pay" onPress={handlePayment} />
-                <Button title="Cancel" onPress={handleClose} color="gray" />
-            </View>
-        </View>
+        <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            keyboardVerticalOffset={100}
+        >
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <View style={styles.container}>
+                        <Text style={styles.title}>Payment Details</Text>
+                        <Text style={styles.item}>Selected: {selectedItem && selectedItem.gems} LS</Text>
+                        <Text style={styles.item}>Total amount: {selectedItem && selectedItem.price}$</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Email"
+                            value={email}
+                            onChangeText={setEmail}
+                        />
+                        <View style={styles.cardContainer}>
+                            <View style={styles.cardRow}>
+                                <TextInput
+                                    style={[styles.input, styles.cardInput]}
+                                    placeholder="Card Number"
+                                    value={cardNumber}
+                                    onChangeText={setCardNumber}
+                                />
+                            </View>
+                            <View style={styles.cardRow}>
+                                <TextInput
+                                    style={[styles.input, styles.cardInput]}
+                                    placeholder="MM/YY"
+                                    value={expiry}
+                                    onChangeText={setExpiry}
+                                />
+                                <TextInput
+                                    style={[styles.input, styles.cardInput]}
+                                    placeholder="CVC"
+                                    value={cvc}
+                                    onChangeText={setCVC}
+                                />
+                            </View>
+                        </View>
+                        <View style={styles.buttons}>
+                            <Button title="Cancel" onPress={handleClose} color="gray" />
+                        </View>
+                    </View>
+                </TouchableWithoutFeedback>
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
 };
 
@@ -89,7 +83,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     input: {
-        width: '100%',
+        width: '80%',
         height: 40,
         borderColor: 'gray',
         borderWidth: 1,
@@ -100,9 +94,12 @@ const styles = StyleSheet.create({
     cardContainer: {
         width: '100%',
         marginBottom: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     cardRow: {
         flexDirection: 'row',
+        width: '80%',
         justifyContent: 'space-between',
         marginBottom: 10,
     },
