@@ -1,11 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Animated, Easing, ImageBackground } from 'react-native';
+import {
+    View,
+    Text,
+    TextInput,
+    Button,
+    StyleSheet,
+    Animated,
+    Easing,
+    ImageBackground,
+    TouchableOpacity
+} from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
+import { Path, Svg } from "react-native-svg";
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const RegisterPage = ({navigation}) => {
+const RegisterPage = ({ navigation }) => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [avatarURL, setAvatarURL] = useState('');
+    const [plane, setPlane] = useState(1); // Default value for plane
+    const [coins, setCoins] = useState(0); // Default value for coins
+    const [premium_coins, setPremium_coins] = useState(0); // Default value for premium coins
+
     const [animation] = useState(new Animated.Value(0));
 
     useEffect(() => {
@@ -33,8 +52,34 @@ const RegisterPage = ({navigation}) => {
         outputRange: [-300, 0],
     });
 
-    const handleRegister = (navigation) => {
-        if (!username || !email || !password) {
+    const isValidEmail = (email) => {
+        // Basic email validation using regex
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
+    const postData = async () => {
+        try {
+            const response = await axios.post('http://172.20.10.3:8888/registerUser.php', {
+                username,
+                email,
+                password,
+                confirmPassword,
+                avatarURL,
+                plane,
+                coins,
+                premium_coins
+            });
+            console.log('Response:', response.data);
+            // Handle success, navigation, etc.
+        } catch (error) {
+            console.error('Error:', error);
+            // Handle error, display message to the user, etc.
+        }
+    };
+
+    const handleRegister = () => {
+        if (!username || !email || !password || !confirmPassword) {
             alert('Please fill out all the fields');
             return;
         }
@@ -44,17 +89,28 @@ const RegisterPage = ({navigation}) => {
             return;
         }
 
-        // Handle registration logic here
-        console.log('Username:', username);
-        console.log('Email:', email);
-        console.log('Password:', password);
-        // You can add your registration API call here
+        if (password !== confirmPassword) {
+            alert('Passwords do not match');
+            return;
+        }
+
+        postData();
     };
 
-    const isValidEmail = (email) => {
-        // Basic email validation using regex
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
+    const handleLogout = async () => {
+        try {
+            // Clearing AsyncStorage of any tokens
+            await AsyncStorage.removeItem('token');
+            console.log('Token removed from local storage');
+
+            // Reload the app
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Login' }],
+            });
+        } catch (error) {
+            console.error('Error removing token:', error);
+        }
     };
 
     return (
@@ -62,55 +118,70 @@ const RegisterPage = ({navigation}) => {
             source={require('../Images/background.jpeg')}
             style={styles.backgroundImage}
         >
-            <Animated.View style={[styles.container, { transform: [{ translateX }] }]}>
-                <View style={[styles.containerRight, { width: '35%' }]}>
-                    <View style={[styles.textContainer, styles.formContainer]}>
-                        <Text style={styles.gameText}>
-                            Hello, welcome to our endless runner game lets fly pilot !!
-                        </Text>
-                    </View>
-                </View>
-
-                <View style={styles.photoContainer}>
-                <View style={[styles.containerRight, { width: '65%' }]}>
-                    <View style={[styles.formContainer]}>
-                        <Text style={styles.title}>Register</Text>
-
+            <Animated.View style={styles.container}>
+                <TouchableOpacity
+                    style={styles.backButton}
+                    onPress={() => navigation.navigate('Menu')}
+                >
+                    <Svg height={40} width={40} fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                         stroke="white">
+                        <Path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                    </Svg>
+                </TouchableOpacity>
+                <View style={styles.formContainer}>
+                    <Text style={styles.title}>Register</Text>
+                    <View style={styles.rowContainer}>
                         <View style={styles.inputContainer}>
                             <Text style={styles.label}>Username</Text>
                             <TextInput
-                                style={[styles.input, { width: '100%' }]}
+                                style={styles.input}
                                 placeholder="Enter your username"
                                 value={username}
                                 onChangeText={(text) => setUsername(text)}
                             />
                         </View>
-
                         <View style={styles.inputContainer}>
                             <Text style={styles.label}>Email</Text>
                             <TextInput
-                                style={[styles.input, { width: '100%' }]}
+                                style={styles.input}
                                 placeholder="Enter your email"
                                 value={email}
                                 onChangeText={(text) => setEmail(text)}
                                 keyboardType="email-address"
                             />
                         </View>
-
+                    </View>
+                    <View style={styles.rowContainer}>
                         <View style={styles.inputContainer}>
                             <Text style={styles.label}>Password</Text>
                             <TextInput
-                                style={[styles.input, { width: '100%' }]}
+                                style={styles.input}
                                 placeholder="Enter your password"
                                 value={password}
                                 onChangeText={(text) => setPassword(text)}
                                 secureTextEntry
                             />
                         </View>
-
-                        {/* Register Button */}
-                        <View style={[styles.inputContainer, { marginBottom: 20 }]}>
-                            <Button title="Register" onPress={handleRegister} color="orange" />
+                        <View style={styles.inputContainer}>
+                            <Text style={styles.label}>Confirm Password</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Confirm your password"
+                                value={confirmPassword}
+                                onChangeText={(text) => setConfirmPassword(text)}
+                                secureTextEntry
+                            />
+                        </View>
+                    </View>
+                    <View style={styles.horizontal}>
+                        <View style={styles.cont}>
+                            <Button title="Register" onPress={handleRegister} color="#7393B3" />
+                            <Button title="Already have an account? Log in" onPress={() => navigation.navigate('Login')} color="#7393B3" />
+                        </View>
+                        <View style={styles.cont}>
+                            <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+                                <Text style={styles.logoutButtonText}>Logout</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </View>
@@ -124,70 +195,77 @@ const styles = StyleSheet.create({
         flex: 1,
         resizeMode: 'cover',
         justifyContent: 'center',
+        alignItems: 'center',
     },
     container: {
         flex: 1,
-        flexDirection: 'row',
+        justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'transparent', // Set background color to transparent
-        marginHorizontal: 20, // Add margin to left and right sides
-        marginTop: 50, // Add margin to top
-        height: '100%', // Add height to fill the screen
-    },
-    containerLeft: {
-        paddingHorizontal: 20,
-        width: '35%', // Adjust width
-    },
-    containerRight: {
-        paddingHorizontal: 20,
-        width: '65%', // Adjust width
     },
     formContainer: {
-        backgroundColor: 'rgba(45, 52, 54, 0.5)', // Semi-transparent background color
+        backgroundColor: 'rgba(45, 52, 54, 0.8)', // Semi-transparent background color
         borderRadius: 10,
         padding: 20,
-        marginHorizontal: 10, // Add some horizontal margin
-        elevation: 5, // Add elevation for shadow on supported devices
-        marginTop: 20, // Add margin to top
-        height: '100%', // Add height to fill the container
+        width: '80%',
+        alignItems: 'center',
+    },
+    cont:{
+        alignItems:"center",
+        justifyContent: "center"
     },
     title: {
         fontSize: 28,
         fontWeight: 'bold',
+        color: '#fff',
         marginBottom: 20,
-        color: '#fff', // Set title color to white
-        textAlign: 'center', // Center-align the title
+    },
+    rowContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        marginBottom: 10,
     },
     inputContainer: {
-        marginBottom: 20,
-        width: '100%', // Adjust width
+        width: '48%',
+    },
+    horizontal:{
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-evenly",
+        width: '100%'
     },
     label: {
         fontSize: 16,
-        color: '#fff', // Set label color to white
+        color: '#fff',
         marginBottom: 5,
     },
     input: {
         height: 40,
         borderWidth: 1,
         borderRadius: 8,
-        paddingHorizontal: 10,
         fontSize: 16,
-        borderColor: 'orange',
-        width: '100%', // Adjust width
+        borderColor: '#7393B3',
+        paddingHorizontal: 10,
+        backgroundColor: '#fff',
     },
-    textContainer: {
-        backgroundColor: 'rgba(255, 154, 0, 0.9)', // Adjust opacity here
-        borderRadius: 10,
-        marginBottom: 20,
-        padding: 15,
-        width: '100%', // Adjust width
+    backButton: {
+        position: 'absolute',
+        top: 40,
+        right: 10,
+        zIndex:1
     },
-    gameText: {
-        fontSize: 24,
+    logoutButton: {
+        backgroundColor: 'red',
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+        borderRadius: 8,
+        marginTop: 20,
+    },
+    logoutButtonText: {
+        color: 'white',
         fontWeight: 'bold',
-        color: '#fff', // Set text color to white
-        textAlign: 'center', // Center-align the game text
+        fontSize: 16,
+        textAlign: 'center',
     },
 });
 

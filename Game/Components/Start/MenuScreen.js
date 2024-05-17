@@ -5,18 +5,16 @@ import ProfileStats from "./ProfileStats";
 import ShopIcon from "./ShopIcon";
 import SideComponents from "./SideComponents";
 import StartButton from "./StartButton";
-// import { ModelView } from 'react-native-3d-model-view';
-// import { GLView } from 'expo-gl';
-// import { Renderer } from 'expo-three';
+import SelectedPlane from "./SelectedPlane";
 
 const MenuScreen = ({navigation}) => {
     // const [fontLoaded] = useFonts({
     //     'Kode': require('../../assets/fonts/KodeMono-VariableFont_wght.ttf'),
     // });
 
-    if (!fontLoaded) {
-        return null; // or a loading indicator
-    }
+    // if (!fontLoaded) {
+    //     return null; // or a loading indicator
+    // }
 
     return (
         <View style={styles.mainScreen}>
@@ -24,17 +22,13 @@ const MenuScreen = ({navigation}) => {
                 source={require('../Images/background.jpeg')}
                 style={styles.background}
             />
+            <View style={styles.centerPlane}>
+                <SelectedPlane />
+            </View>
             <ProfileStats navigation={navigation}/>
             <ShopIcon />
             <SideComponents navigation={navigation} />
             <StartButton />
-            {/*<ModelView*/}
-            {/*    style={styles.model}*/}
-            {/*    source={{*/}
-            {/*        obj: require('../Models/airplane1.obj'), // Corrected path*/}
-            {/*        mtl: require('../Models/airplane1.mtl'), // Corrected path*/}
-            {/*    }}*/}
-            {/*/>*/}
         </View>
     );
 };
@@ -44,6 +38,11 @@ const styles = StyleSheet.create({
         flex: 1,
         height: "100%",
         fontFamily: "Kode"
+    },
+    centerPlane:{
+        flex:1,
+        alignItems:"center",
+        justifyContent: "center"
     },
     background: {
         flex: 1,

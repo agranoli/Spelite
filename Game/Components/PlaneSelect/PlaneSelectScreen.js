@@ -1,30 +1,51 @@
-import React, { useState, useRef } from 'react';
-import { View, StyleSheet, Image, TouchableOpacity, ScrollView, Dimensions, Text } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { ImageBackground,View, StyleSheet, Image, TouchableOpacity, ScrollView, Dimensions, Text } from 'react-native';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {Path, Svg} from "react-native-svg";
 
 const PlaneSelectScreen = ({ navigation }) => {
-    const [selectedPlane, setSelectedPlane] = useState(0);
-    const scrollViewRef = useRef(null);
+    const [selectedPlaneIndex, setSelectedPlaneIndex] = useState(0);
     const screenWidth = Dimensions.get('window').width;
     const screenHeight = Dimensions.get('window').height;
     const planeWidth = screenWidth * 0.6;
     const planeHeight = screenHeight * 0.6;
     const smallPlaneWidth = screenWidth * 0.3;
     const smallPlaneHeight = planeHeight * 0.5;
-    const padding = (screenWidth - planeWidth) / 2; // Calculate the padding
+    const padding = (screenWidth - planeWidth) / 2;
+
+    useEffect(() => {
+        const fetchSelectedPlaneIndex = async () => {
+            try {
+                const storedIndex = await AsyncStorage.getItem('selectedPlaneIndex');
+                if (storedIndex !== null) {
+                    setSelectedPlaneIndex(parseInt(storedIndex, 10)); // Parse to integer
+                    console.log('Selected plane index retrieved from AsyncStorage:', storedIndex);
+                }
+            } catch (error) {
+                console.error('Error retrieving selected plane index from AsyncStorage:', error);
+            }
+        };
+
+        fetchSelectedPlaneIndex();
+    }, []);
 
     const handleScroll = (event) => {
         const contentOffsetX = event.nativeEvent.contentOffset.x;
-        const newSelectedPlane = Math.round(contentOffsetX / (planeWidth + 20)); // Adjust this value according to your needs
-        setSelectedPlane(newSelectedPlane);
+        const newSelectedPlane = Math.round(contentOffsetX / (planeWidth + 20));
+        setSelectedPlaneIndex(newSelectedPlane);
     };
 
-    const handlePlaneSelect = (index) => {
-        setSelectedPlane(index);
-        scrollViewRef.current.scrollTo({
-            x: (index * (planeWidth + 20)), // Adjust this value according to your needs
-            animated: true
-        });
+    const handlePlaneSelect = async (index) => {
+        try {
+            // Save the selected plane index to AsyncStorage
+            await AsyncStorage.setItem('selectedPlaneIndex', String(index));
+            console.log('Selected plane index saved:', index);
+
+            // Navigate back to the previous screen
+            navigation.goBack();
+        } catch (error) {
+            console.error('Error saving selected plane index:', error);
+        }
     };
 
     const planeImages = [
@@ -36,20 +57,30 @@ const PlaneSelectScreen = ({ navigation }) => {
     ];
 
     return (
+        <ImageBackground
+            source={require('../Images/background.jpeg')}
+            style={styles.backgroundImage}
+        >
         <View style={styles.container}>
-            <Image
-                source={require('../Images/background.jpeg')}
-                style={styles.background}
-            />
+            <TouchableOpacity
+                style={styles.backButton}
+                onPress={() => navigation.navigate('Menu')}
+            >
+                <Svg height={40} width={40} fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                     stroke="white">
+                    <Path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                </Svg>
+            </TouchableOpacity>
+
             <ScrollView
                 horizontal
-                contentContainerStyle={{...styles.scrollView, paddingHorizontal: padding}} // Add padding to the scroll view
+                contentContainerStyle={{ ...styles.scrollView, paddingHorizontal: padding }}
                 showsHorizontalScrollIndicator={false}
-                ref={scrollViewRef}
-                snapToInterval={planeWidth + 20} // Adjust this value according to your needs
+                snapToInterval={planeWidth + 20}
                 decelerationRate="fast"
-                scrollEnabled={selectedPlane !== null}
-                onScroll={handleScroll} // Use onScroll instead of onMomentumScrollEnd
+                scrollEventThrottle={16}
+                scrollEnabled={selectedPlaneIndex !== null}
+                onScroll={handleScroll}
                 pagingEnabled
             >
                 {planeImages.map((image, index) => (
@@ -59,45 +90,43 @@ const PlaneSelectScreen = ({ navigation }) => {
                             onPress={() => handlePlaneSelect(index)}
                             activeOpacity={0.8}
                         >
-                            <Image source={image} style={[styles.planeImage, { height: index === selectedPlane ? planeHeight : smallPlaneHeight }]} />
+                            <Image source={image} style={[styles.planeImage, { height: index === selectedPlaneIndex ? planeHeight : smallPlaneHeight }]} />
                         </TouchableOpacity>
-                        {index === selectedPlane && (
-                            <TouchableOpacity style={styles.selectButton} onPress={() => console.log('Plane selected')}>
+                        {index === selectedPlaneIndex && (
+                            <TouchableOpacity style={styles.selectButton} onPress={() => handlePlaneSelect(index)}>
                                 <Text style={styles.selectButtonText}>Select</Text>
                             </TouchableOpacity>
                         )}
                     </View>
                 ))}
             </ScrollView>
-            <TouchableOpacity
-                style={styles.backButton}
-                onPress={() => navigation.navigate('Menu')}
-            >
-                <Svg height={40} width={40} fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                     stroke="white" className="w-6 h-6">
-                    <Path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"/>
-                </Svg>
-
-            </TouchableOpacity>
         </View>
+        </ImageBackground>
     );
 };
 
 const styles = StyleSheet.create({
+    backgroundImage: {
+        flex: 1,
+        resizeMode: 'cover',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        width: "100%",
-        height: "100%"
+        alignItems: 'center',
+        justifyContent: 'center',
     },
-    background: {
+    backButton: {
         position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        resizeMode: 'cover',
-        opacity: 0.95,
+        top: 20,
+        right: 20,
+        zIndex: 1,
+    },
+    backButtonText: {
+        color: '#0096FF',
+        fontSize: 16,
+        fontWeight: 'bold',
     },
     scrollView: {
         flexGrow: 1,
@@ -111,7 +140,7 @@ const styles = StyleSheet.create({
     planeImageContainer: {
         borderRadius: 10,
         overflow: 'hidden',
-        margin: 10, // Added margin to create space between images
+        margin: 10,
     },
     planeImage: {
         width: '100%',
@@ -128,15 +157,6 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
     },
-    backButtonText: {
-        color: 'white',
-        fontWeight: 'bold',
-    },
-    backButton: {
-        position: 'absolute',
-        top: 20,
-        right: 20
-    }
 });
 
 export default PlaneSelectScreen;

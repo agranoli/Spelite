@@ -2,7 +2,7 @@ import { View, StyleSheet, Image, Text, Pressable, Modal } from 'react-native';
 import { useFonts } from 'expo-font';
 import React, { useState, useEffect } from 'react';
 import Gem from "../Images/gem.png";
-import { Audio } from 'expo-av';
+// import { Audio } from 'expo-av';
 import { Svg, Path } from 'react-native-svg';
 import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
 

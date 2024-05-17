@@ -1,13 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
 import { Svg, Path } from 'react-native-svg';
 import gem from "../Images/gem.png";
 import { useFonts } from 'expo-font';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const ShopIcon = () => {
-    // const [fontLoaded] = useFonts({
-    //     'Kode': require('../../assets/fonts/KodeMono-VariableFont_wght.ttf'),
-    // });
+const ShopIcon = ({navigation}) => {
+    const [userData, setUserData] = useState(null);
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                let token = await AsyncStorage.getItem('token');
+                if (!token) {
+                    navigation.navigate('Login');
+                    return;
+                }
+
+                console.log('Token:', token);
+
+                const response = await fetch(`http://172.20.10.3:8888/getUserData.php?token=${token}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                });
+
+                if (!response.ok) {
+                    console.error('Failed to fetch user data:', response.statusText);
+                    return;
+                }
+
+                const userData = await response.json();
+                setUserData(userData);
+            } catch (error) {
+                console.error('Error fetching user data:', error.message);
+            }
+        };
+
+        fetchUserData();
+    }, [navigation]);
     return (
         <View style={styles.main}>
             <View style={[styles.coinContainer, styles.shadowProp]}>
@@ -17,14 +49,14 @@ const ShopIcon = () => {
                               d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                     </Svg>
                     <Text style={styles.profileText}>
-                        187
+                        {userData?.coins}
                     </Text>
                 </View>
                 <View style={styles.currencySort}>
                     <Image source={gem} style={styles.gems}>
                     </Image>
                     <Text style={styles.profileText}>
-                        73
+                        {userData?.premium_coins}
                     </Text>
                 </View>
             </View>
@@ -60,7 +92,7 @@ const styles = StyleSheet.create({
     shopIcon: {
         width: "25%",
         height: "100%",
-        backgroundColor: "#0096FF",
+        backgroundColor: "#7393B3",
         marginLeft:5,
         justifyContent: "center",
         alignItems: "center",
@@ -74,7 +106,7 @@ const styles = StyleSheet.create({
     coinContainer: {
         width: "70%",
         height: "100%",
-        backgroundColor: "#0096FF",
+        backgroundColor: "#7393B3",
         flexDirection: "column",
         justifyContent: "space-evenly",
     },
