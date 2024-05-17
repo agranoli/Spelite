@@ -13,6 +13,7 @@ import {
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { Path, Svg } from "react-native-svg";
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const RegisterPage = ({ navigation }) => {
     const [username, setUsername] = useState('');
@@ -96,113 +97,91 @@ const RegisterPage = ({ navigation }) => {
         postData();
     };
 
-    const handleLogout = () => {
-        // Clear user data, session, or authentication token (if applicable)
-        setUsername('');
-        setEmail('');
-        setPassword('');
-        setConfirmPassword('');
-        setAvatarURL('');
-        setPlane(1);
-        setCoins(0);
-        setPremium_coins(0);
+    const handleLogout = async () => {
+        try {
+            // Clearing AsyncStorage of any tokens
+            await AsyncStorage.removeItem('token');
+            console.log('Token removed from local storage');
 
-        // Navigate to the login screen
-        navigation.navigate('Menu');
+            // Reload the app
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Login' }],
+            });
+        } catch (error) {
+            console.error('Error removing token:', error);
+        }
     };
-
 
     return (
         <ImageBackground
             source={require('../Images/background.jpeg')}
             style={styles.backgroundImage}
         >
-            <Animated.View style={[styles.container, { transform: [{ translateX }] }]}>
-                <View style={[styles.containerRight, { width: '35%' }]}>
-                    <View style={[styles.textContainer, styles.formContainer]}>
-                        <Text style={styles.gameText}>
-                            Hello, welcome to our endless runner game lets fly pilot !!
-                        </Text>
-                        {/* Logout button */}
-                        <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
-                            <Text style={styles.logoutButtonText}>Logout</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+            <Animated.View style={styles.container}>
                 <TouchableOpacity
                     style={styles.backButton}
                     onPress={() => navigation.navigate('Menu')}
                 >
                     <Svg height={40} width={40} fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                         stroke="white" className="w-6 h-6">
+                         stroke="white">
                         <Path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                     </Svg>
-
                 </TouchableOpacity>
-                <View style={styles.photoContainer}>
-                    <View style={[styles.containerRight, { width: '65%' }]}>
-                        <View style={[styles.formContainer]}>
-                            <Text style={styles.title}>Register</Text>
-                            <View style={styles.fitment}>
-                                <View style={styles.inputContainer}>
-                                    <Text style={styles.label}>Username</Text>
-                                    <TextInput
-                                        style={[styles.input, { width: '100%' }]}
-                                        placeholder="Enter your username"
-                                        value={username}
-                                        onChangeText={(text) => setUsername(text)}
-                                    />
-                                </View>
-
-                                <View style={styles.inputContainer}>
-                                    <Text style={styles.label}>Email</Text>
-                                    <TextInput
-                                        style={[styles.input, { width: '100%' }]}
-                                        placeholder="Enter your email"
-                                        value={email}
-                                        onChangeText={(text) => setEmail(text)}
-                                        keyboardType="email-address"
-                                    />
-                                </View>
-                            </View>
-                            <View style={styles.fitment}>
-                                <View style={styles.inputContainer}>
-                                    <Text style={styles.label}>Password</Text>
-                                    <TextInput
-                                        style={[styles.input, { width: '100%' }]}
-                                        placeholder="Enter your password"
-                                        value={password}
-                                        onChangeText={(text) => setPassword(text)}
-                                        secureTextEntry
-                                    />
-                                </View>
-                                <View style={styles.inputContainer}>
-                                    <Text style={styles.label}>Confirm Password</Text>
-                                    <TextInput
-                                        style={[styles.input, { width: '100%' }]}
-                                        placeholder="Confirm your password"
-                                        value={confirmPassword}
-                                        onChangeText={(text) => setConfirmPassword(text)}
-                                        secureTextEntry
-                                    />
-                                </View>
-                            </View>
-                            <View style={styles.LongInputContainer}>
-                                <Text style={styles.label}>Select avatar</Text>
-                                <TextInput
-                                    style={[styles.input, { width: '100%' }]}
-                                    placeholder="Enter avatar URL"
-                                    value={avatarURL}
-                                    onChangeText={(text) => setAvatarURL(text)}
-                                />
-                            </View>
-                            {/* Register Button */}
-                            <View style={styles.inputContainer}>
-                                <Button title="Register" onPress={handleRegister} color="orange" />
-                            </View>
-                            <View style={styles.LongInputContainer}>
-                                <Button title="Already have an account? Log in" onPress={() => navigation.navigate('Login')} color="orange" />
-                            </View>
+                <View style={styles.formContainer}>
+                    <Text style={styles.title}>Register</Text>
+                    <View style={styles.rowContainer}>
+                        <View style={styles.inputContainer}>
+                            <Text style={styles.label}>Username</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Enter your username"
+                                value={username}
+                                onChangeText={(text) => setUsername(text)}
+                            />
+                        </View>
+                        <View style={styles.inputContainer}>
+                            <Text style={styles.label}>Email</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Enter your email"
+                                value={email}
+                                onChangeText={(text) => setEmail(text)}
+                                keyboardType="email-address"
+                            />
+                        </View>
+                    </View>
+                    <View style={styles.rowContainer}>
+                        <View style={styles.inputContainer}>
+                            <Text style={styles.label}>Password</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Enter your password"
+                                value={password}
+                                onChangeText={(text) => setPassword(text)}
+                                secureTextEntry
+                            />
+                        </View>
+                        <View style={styles.inputContainer}>
+                            <Text style={styles.label}>Confirm Password</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Confirm your password"
+                                value={confirmPassword}
+                                onChangeText={(text) => setConfirmPassword(text)}
+                                secureTextEntry
+                            />
+                        </View>
+                    </View>
+                    <View style={styles.horizontal}>
+                        <View style={styles.cont}>
+                            <Button title="Register" onPress={handleRegister} color="#7393B3" />
+                            <Button title="Already have an account? Log in" onPress={() => navigation.navigate('Login')} color="#7393B3" />
+                        </View>
+                        <View style={styles.cont}>
+                            <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+                                <Text style={styles.logoutButtonText}>Logout</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </View>
@@ -216,52 +195,48 @@ const styles = StyleSheet.create({
         flex: 1,
         resizeMode: 'cover',
         justifyContent: 'center',
-    },
-    fitment: {
-        justifyContent: "space-evenly",
-        alignItems: "center",
-        flexDirection: "row",
-        width: "100%",
+        alignItems: 'center',
     },
     container: {
         flex: 1,
-        flexDirection: 'row',
+        justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'transparent', // Set background color to transparent
-        marginHorizontal: 20, // Add margin to left and right sides
-        marginTop: 50, // Add margin to top
-        height: '100%', // Add height to fill the screen
-    },
-    containerLeft: {
-        paddingHorizontal: 20,
-        width: '35%', // Adjust width
-    },
-    containerRight: {
-        paddingHorizontal: 20,
-        width: '65%', // Adjust width
     },
     formContainer: {
-        backgroundColor: 'rgba(45, 52, 54, 0.5)', // Semi-transparent background color
+        backgroundColor: 'rgba(45, 52, 54, 0.8)', // Semi-transparent background color
         borderRadius: 10,
-        height: '100%',
-        alignItems: "center",
-        justifyContent: "space-evenly"
+        padding: 20,
+        width: '80%',
+        alignItems: 'center',
+    },
+    cont:{
+        alignItems:"center",
+        justifyContent: "center"
     },
     title: {
         fontSize: 28,
         fontWeight: 'bold',
-        color: '#fff', // Set title color to white
-        textAlign: 'center', // Center-align the title
+        color: '#fff',
+        marginBottom: 20,
     },
-    LongInputContainer: {
-        width: '90%', // Adjust width
+    rowContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        marginBottom: 10,
     },
     inputContainer: {
-        width: '42%', // Adjust width
+        width: '48%',
+    },
+    horizontal:{
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-evenly",
+        width: '100%'
     },
     label: {
         fontSize: 16,
-        color: '#fff', // Set label color to white
+        color: '#fff',
         marginBottom: 5,
     },
     input: {
@@ -269,28 +244,22 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 8,
         fontSize: 16,
-        borderColor: 'orange',
-        width: '90%', // Adjust width
+        borderColor: '#7393B3',
+        paddingHorizontal: 10,
+        backgroundColor: '#fff',
     },
-    textContainer: {
-        backgroundColor: 'rgba(255, 154, 0, 0.9)', // Adjust opacity here
-        borderRadius: 10,
-        marginBottom: 20,
-        padding: 15,
-        width: '90%', // Adjust width
-    },
-    gameText: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#fff', // Set text color to white
-        textAlign: 'center', // Center-align the game text
+    backButton: {
+        position: 'absolute',
+        top: 40,
+        right: 10,
+        zIndex:1
     },
     logoutButton: {
-        backgroundColor: 'orange',
+        backgroundColor: 'red',
         paddingVertical: 8,
         paddingHorizontal: 16,
         borderRadius: 8,
-        marginTop: 10,
+        marginTop: 20,
     },
     logoutButtonText: {
         color: 'white',
@@ -298,15 +267,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center',
     },
-    backButton: {
-        position: 'absolute',
-        top: 20,
-        right: 20,
-        zIndex: 1 // Add zIndex style
-    },
-    photoContainer: {
-        width: "90%"
-    }
 });
 
 export default RegisterPage;

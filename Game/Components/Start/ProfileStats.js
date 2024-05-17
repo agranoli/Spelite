@@ -47,11 +47,12 @@ const ProfileStats = ({ navigation }) => {
                        style={styles.imageBorder}>
                 </Image>
             </TouchableOpacity>
-            <View style={[styles.levelContainer, styles.shadowProp]}>
+            <TouchableOpacity style={[styles.levelContainer, styles.shadowProp]}
+                  onPress={() => navigation.navigate('Edit')}>
                 <Text style={styles.profileText}>
                     {userData?.username} {/* Use optional chaining to avoid errors if userData is null */}
                 </Text>
-            </View>
+            </TouchableOpacity>
         </View>
     );
 };
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
         width: "70%",
         height: "100%",
         marginLeft:5,
-        backgroundColor: "#0096FF",
+        backgroundColor: "#7393B3",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center"
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
     imageContainer: {
         width: "25%",
         height: "100%",
-        backgroundColor: "#0096FF",
+        backgroundColor: "#7393B3",
         justifyContent: "center",
         alignItems: "center",
     },

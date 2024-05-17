@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     shopIcon: {
         width: "25%",
         height: "100%",
-        backgroundColor: "#0096FF",
+        backgroundColor: "#7393B3",
         marginLeft:5,
         justifyContent: "center",
         alignItems: "center",
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     coinContainer: {
         width: "70%",
         height: "100%",
-        backgroundColor: "#0096FF",
+        backgroundColor: "#7393B3",
         flexDirection: "column",
         justifyContent: "space-evenly",
     },

@@ -1,31 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from '@react-navigation/native';
 
-const SelectedPlane = ({ route }) => {
-    console.log("Route:", route); // Add this line to check the route object
-    const selectedImageIndex = route?.params?.selectedImageIndex ?? 0; // Use optional chaining and nullish coalescing
+const SelectedPlane = () => {
+    const [selectedPlaneIndex, setSelectedPlaneIndex] = useState(0);
 
-    const [planeImage, setPlaneImage] = useState(null);
+    useFocusEffect(
+        React.useCallback(() => {
+            const fetchSelectedPlaneIndex = async () => {
+                try {
+                    const storedIndex = await AsyncStorage.getItem('selectedPlaneIndex');
+                    if (storedIndex !== null) {
+                        setSelectedPlaneIndex(parseInt(storedIndex, 10)); // Parse to integer
+                        console.log('Selected plane index retrieved from AsyncStorage:', storedIndex);
+                    }
+                } catch (error) {
+                    console.error('Error retrieving selected plane index from AsyncStorage:', error);
+                }
+            };
 
-    useEffect(() => {
-        const planeImages = [
-            require('../Images/plane1.png'),
-            require('../Images/plane2.png'),
-            require('../Images/plane3.png'),
-            require('../Images/plane4.png'),
-            require('../Images/plane5.png'),
-        ];
+            fetchSelectedPlaneIndex();
+        }, [])
+    );
 
-        if (selectedImageIndex >= 0 && selectedImageIndex < planeImages.length) {
-            setPlaneImage(planeImages[selectedImageIndex]);
-        } else {
-            setPlaneImage(null); // No image for invalid index
-        }
-    }, [selectedImageIndex]);
+    const planeImages = [
+        require('../Images/plane1.png'),
+        require('../Images/plane2.png'),
+        require('../Images/plane3.png'),
+        require('../Images/plane4.png'),
+        require('../Images/plane5.png'),
+    ];
+
+    const selectedPlaneImage = planeImages[selectedPlaneIndex];
 
     return (
         <View style={styles.main}>
-            {planeImage && <Image source={planeImage} style={styles.image} />}
+            <Image source={selectedPlaneImage} style={styles.image} />
         </View>
     );
 };

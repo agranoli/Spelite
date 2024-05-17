@@ -6,9 +6,6 @@ import ShopIcon from "./ShopIcon";
 import SideComponents from "./SideComponents";
 import StartButton from "./StartButton";
 import SelectedPlane from "./SelectedPlane";
-// import { ModelView } from 'react-native-3d-model-view';
-// import { GLView } from 'expo-gl';
-// import { Renderer } from 'expo-three';
 
 const MenuScreen = ({navigation}) => {
     // const [fontLoaded] = useFonts({
@@ -32,13 +29,6 @@ const MenuScreen = ({navigation}) => {
             <ShopIcon />
             <SideComponents navigation={navigation} />
             <StartButton />
-            {/*<ModelView*/}
-            {/*    style={styles.model}*/}
-            {/*    source={{*/}
-            {/*        obj: require('../Models/airplane1.obj'), // Corrected path*/}
-            {/*        mtl: require('../Models/airplane1.mtl'), // Corrected path*/}
-            {/*    }}*/}
-            {/*/>*/}
         </View>
     );
 };
