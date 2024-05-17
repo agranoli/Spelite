@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "react-native-axios": "^0.17.1"
+  }
+}
