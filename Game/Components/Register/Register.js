@@ -25,6 +25,12 @@ const RegisterPage = ({ navigation }) => {
     const [coins, setCoins] = useState(0); // Default value for coins
     const [premium_coins, setPremium_coins] = useState(0); // Default value for premium coins
 
+    const [usernameError, setUsernameError] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const [confirmPasswordError, setConfirmPasswordError] = useState('');
+    const [registrationError, setRegistrationError] = useState('');
+
     const [animation] = useState(new Animated.Value(0));
 
     useEffect(() => {
@@ -33,9 +39,8 @@ const RegisterPage = ({ navigation }) => {
                 ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT
             );
         };
-
-        lockOrientation(); // Lock the orientation when the component mounts
-        animateForm(); // Start animation
+        lockOrientation();
+        animateForm();
     }, []);
 
     const animateForm = () => {
@@ -73,24 +78,46 @@ const RegisterPage = ({ navigation }) => {
             console.log('Response:', response.data);
             // Handle success, navigation, etc.
         } catch (error) {
+            setRegistrationError('An error occurred during registration');
             console.error('Error:', error);
-            // Handle error, display message to the user, etc.
         }
     };
 
     const handleRegister = () => {
-        if (!username || !email || !password || !confirmPassword) {
-            alert('Please fill out all the fields');
-            return;
+        let hasError = false;
+        setUsernameError('');
+        setEmailError('');
+        setPasswordError('');
+        setConfirmPasswordError('');
+        setRegistrationError('');
+
+        if (!username) {
+            setUsernameError('Please enter your username');
+            hasError = true;
         }
 
-        if (!isValidEmail(email)) {
-            alert('Please enter a valid email address');
-            return;
+        if (!email) {
+            setEmailError('Please enter your email');
+            hasError = true;
+        } else if (!isValidEmail(email)) {
+            setEmailError('Please enter a valid email address');
+            hasError = true;
         }
 
-        if (password !== confirmPassword) {
-            alert('Passwords do not match');
+        if (!password) {
+            setPasswordError('Please enter your password');
+            hasError = true;
+        }
+
+        if (!confirmPassword) {
+            setConfirmPasswordError('Please confirm your password');
+            hasError = true;
+        } else if (password !== confirmPassword) {
+            setConfirmPasswordError('Passwords do not match');
+            hasError = true;
+        }
+
+        if (hasError) {
             return;
         }
 
@@ -99,11 +126,9 @@ const RegisterPage = ({ navigation }) => {
 
     const handleLogout = async () => {
         try {
-            // Clearing AsyncStorage of any tokens
             await AsyncStorage.removeItem('token');
             console.log('Token removed from local storage');
 
-            // Reload the app
             navigation.reset({
                 index: 0,
                 routes: [{ name: 'Login' }],
@@ -139,6 +164,7 @@ const RegisterPage = ({ navigation }) => {
                                 value={username}
                                 onChangeText={(text) => setUsername(text)}
                             />
+                            {usernameError ? <Text style={styles.errorText}>{usernameError}</Text> : null}
                         </View>
                         <View style={styles.inputContainer}>
                             <Text style={styles.label}>Email</Text>
@@ -149,6 +175,7 @@ const RegisterPage = ({ navigation }) => {
                                 onChangeText={(text) => setEmail(text)}
                                 keyboardType="email-address"
                             />
+                            {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
                         </View>
                     </View>
                     <View style={styles.rowContainer}>
@@ -161,6 +188,7 @@ const RegisterPage = ({ navigation }) => {
                                 onChangeText={(text) => setPassword(text)}
                                 secureTextEntry
                             />
+                            {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
                         </View>
                         <View style={styles.inputContainer}>
                             <Text style={styles.label}>Confirm Password</Text>
@@ -171,11 +199,13 @@ const RegisterPage = ({ navigation }) => {
                                 onChangeText={(text) => setConfirmPassword(text)}
                                 secureTextEntry
                             />
+                            {confirmPasswordError ? <Text style={styles.errorText}>{confirmPasswordError}</Text> : null}
                         </View>
                     </View>
                     <View style={styles.horizontal}>
                         <View style={styles.cont}>
                             <Button title="Register" onPress={handleRegister} color="#7393B3" />
+                            {registrationError ? <Text style={styles.errorText}>{registrationError}</Text> : null}
                             <Button title="Already have an account? Log in" onPress={() => navigation.navigate('Login')} color="#7393B3" />
                         </View>
                         <View style={styles.cont}>
@@ -199,13 +229,15 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
+        height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
     },
     formContainer: {
-        backgroundColor: 'rgba(45, 52, 54, 0.8)', // Semi-transparent background color
+        backgroundColor: 'rgba(45, 52, 54, 0.8)',
         borderRadius: 10,
         padding: 20,
+        height: '100%',
         width: '80%',
         alignItems: 'center',
     },
@@ -247,6 +279,10 @@ const styles = StyleSheet.create({
         borderColor: '#7393B3',
         paddingHorizontal: 10,
         backgroundColor: '#fff',
+    },
+    errorText: {
+        color: 'red',
+        marginTop: 5,
     },
     backButton: {
         position: 'absolute',

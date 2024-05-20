@@ -43,14 +43,14 @@ const ProfileStats = ({ navigation }) => {
         <View style={styles.main}>
             <TouchableOpacity style={[styles.imageContainer, styles.shadowProp]}
                               onPress={() => navigation.navigate('Register')}>
-                <Image source={{ uri: userData?.avatarUrl }} // Use user's avatarUrl for the image source
+                <Image source={{ uri: userData?.avatarUrl }}
                        style={styles.imageBorder}>
                 </Image>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.levelContainer, styles.shadowProp]}
                   onPress={() => navigation.navigate('Edit')}>
                 <Text style={styles.profileText}>
-                    {userData?.username} {/* Use optional chaining to avoid errors if userData is null */}
+                    {userData?.username}
                 </Text>
             </TouchableOpacity>
         </View>

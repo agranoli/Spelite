@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "expo": "^51.0.5",
     "react-native-axios": "^0.17.1"
   }
 }

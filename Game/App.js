@@ -9,9 +9,10 @@ import PlaneSelectScreen from "./Components/PlaneSelect/PlaneSelectScreen";
 import Register from "./Components/Register/Register";
 import Leaderboard from "./Components/Leaderboard/Leaderboard";
 import Login from "./Components/Login/Login";
-import Shop from "./Components/shop/shop";
 import GameHistory from "./Components/GameHistory/GameHistory";
 import ProfileEdit from "./Components/profile/ProfileEdit";
+import Shop from "./Components/shop/shop";
+import Payment from "./Components/shop/payment";
 
 const Stack = createNativeStackNavigator();
 
@@ -60,6 +61,11 @@ export default function App() {
             <Stack.Screen
                 name="Leaderboard"
                 component={Leaderboard}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="Payment"
+                component={Payment}
                 options={{ headerShown: false }}
             />
             <Stack.Screen

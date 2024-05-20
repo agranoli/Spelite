@@ -37,11 +37,8 @@ const PlaneSelectScreen = ({ navigation }) => {
 
     const handlePlaneSelect = async (index) => {
         try {
-            // Save the selected plane index to AsyncStorage
             await AsyncStorage.setItem('selectedPlaneIndex', String(index));
             console.log('Selected plane index saved:', index);
-
-            // Navigate back to the previous screen
             navigation.goBack();
         } catch (error) {
             console.error('Error saving selected plane index:', error);

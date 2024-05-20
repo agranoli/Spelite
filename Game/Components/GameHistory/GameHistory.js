@@ -16,7 +16,6 @@ const UserGameHistory = ({ navigation }) => {
                     return;
                 }
 
-                // Fetch user data to get the user ID
                 const response = await fetch(`http://172.20.10.3:8888/getUserData.php?token=${token}`, {
                     method: 'GET',
                     headers: {
@@ -30,9 +29,8 @@ const UserGameHistory = ({ navigation }) => {
                 }
 
                 const userData = await response.json();
-                setUserId(userData.id);  // Assuming the user ID is stored in userData.id
+                setUserId(userData.id);
 
-                // Fetch game history using the user ID
                 const gameHistoryResponse = await fetch('http://172.20.10.3:8888/GameHistory.php', {
                     method: 'POST',
                     headers: {
@@ -126,7 +124,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         flex: 1,
         textAlign: 'center',
-        color: '#ffffff', // Header text color
+        color: '#ffffff',
     },
     row: {
         flexDirection: 'row',
@@ -140,7 +138,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         flex: 1,
         textAlign: 'center',
-        color: '#ffffff', // Cell text color
+        color: '#ffffff',
     },
     backButton: {
         position: 'absolute',

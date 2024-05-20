@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import gem from "../Images/gem.png";
-import { useFonts } from 'expo-font';
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const ShopIcon = ({navigation}) => {
+const ShopIcon = ({ navigation }) => {
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {
@@ -40,6 +39,7 @@ const ShopIcon = ({navigation}) => {
 
         fetchUserData();
     }, [navigation]);
+
     return (
         <View style={styles.main}>
             <View style={[styles.coinContainer, styles.shadowProp]}>
@@ -53,14 +53,14 @@ const ShopIcon = ({navigation}) => {
                     </Text>
                 </View>
                 <View style={styles.currencySort}>
-                    <Image source={gem} style={styles.gems}>
-                    </Image>
+                    <Image source={gem} style={styles.gems} />
                     <Text style={styles.profileText}>
                         {userData?.premium_coins}
                     </Text>
                 </View>
             </View>
-            <TouchableOpacity style={[styles.shopIcon, styles.shadowProp]}>
+            <TouchableOpacity style={[styles.shopIcon, styles.shadowProp]}
+                              onPress={() => navigation.navigate('Shop')}>
                 <Svg width={24} height={24} viewBox="0 0 24 24" fill="none" strokeWidth={1.5} stroke="white">
                     <Path strokeLinecap="round" strokeLinejoin="round"
                           d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
@@ -71,14 +71,14 @@ const ShopIcon = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-    main:{
+    main: {
         position: "absolute",
         width: "27%",
         height: "15%",
         zIndex: 1,
         top: 20,
         right: 50,
-        flex:1,
+        flex: 1,
         flexDirection: "row",
         justifyContent: "space-between",
         fontFamily: "Kode"
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
         width: "25%",
         height: "100%",
         backgroundColor: "#7393B3",
-        marginLeft:5,
+        marginLeft: 5,
         justifyContent: "center",
         alignItems: "center",
     },
@@ -110,15 +110,15 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         justifyContent: "space-evenly",
     },
-    currencySort:{
+    currencySort: {
         width: "98%",
         height: "50%",
         flexDirection: "row",
         marginLeft: 10
     },
-    gems:{
+    gems: {
         height: 24,
-        width:24
+        width: 24
     }
 });
 

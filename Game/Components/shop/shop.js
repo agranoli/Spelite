@@ -1,10 +1,9 @@
-import { View, StyleSheet, Image, Text, Pressable, Modal } from 'react-native';
-import { useFonts } from 'expo-font';
-import React, { useState, useEffect } from 'react';
-import Gem from "../Images/gem.png";
-// import { Audio } from 'expo-av';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Image, Pressable, Modal } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
-import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
+import { useNavigation } from '@react-navigation/native';
+import Gem from '../Images/gem.png';
+import PaymentScreen from "./payment";
 
 const prices = [
     { gems: 50, price: 2.99 },
@@ -18,137 +17,99 @@ const prices = [
 function Shop() {
     const navigation = useNavigation();
     const [selectedItem, setSelectedItem] = useState(null);
-    const [showPaymentModal, setShowPaymentModal] = useState(false);// Initialize navigation hook
+    const [showPaymentModal, setShowPaymentModal] = useState(false);
 
     const handleSelectItem = (item) => {
         setSelectedItem(item);
-        setShowPaymentModal(true);
+        navigation.navigate('Payment', { selectedItem: item });
     };
 
-    const [fontLoaded] = useFonts({
-        'Kode': require('../../assets/fonts/KodeMono-VariableFont_wght.ttf'),
-    });
-
-    if (!fontLoaded) {
-        return null; // or a loading indicator
-    }
-
-    useEffect(() => {
-        let soundObject;
-
-        const playBackgroundMusic = async () => {
-            try {
-                soundObject = new Audio.Sound();
-                await soundObject.loadAsync(require('../sound/menu1.mp3'));
-                await soundObject.setVolumeAsync(1);
-                await soundObject.playAsync();
-            } catch (error) {
-                console.log('Error playing background music:', error);
-            }
-        };
-
-        playBackgroundMusic();
-
-        return () => {
-            if (soundObject) {
-                soundObject.stopAsync();
-                soundObject.unloadAsync();
-            }
-        };
-    }, []);
-
     const handleReturnPress = () => {
-        navigation.navigate('Menu'); // Navigate to MenuScreen when return button is pressed
+        navigation.navigate('Menu');
     };
 
     return (
-        <>
-            <View style={styles.container}>
-                <View style={styles.back}>
-                    <Pressable onPress={handleReturnPress}>
-                        <Svg width={50} height={50} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="w-6 h-6">
-                            <Path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
-                        </Svg>
-                    </Pressable>
-                </View>
-                <Image
-                    source={require('../Images/background.jpeg')}
-                    style={styles.background}
-                />
-                <View style={styles.box}>
-                    {prices.map((item, index) => (
-                        <View style={styles.gems} key={index}>
-                            <Image
-                                source={Gem}
-                                style={styles.gem}
-                            />
-                            <Text style={styles.desc}>{item.gems} LS</Text>
-                            <Pressable style={styles.price}>
-                                <Text style={styles.tag}>{item.price}$</Text>
-                            </Pressable>
-                        </View>
-                    ))}
-                </View>
+        <View style={styles.container}>
+            <View style={styles.back}>
+                <Pressable onPress={handleReturnPress}>
+                    <Svg width={50} height={50} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="w-6 h-6">
+                        <Path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                    </Svg>
+                </Pressable>
             </View>
-        </>
+            <Image source={require('../Images/background.jpeg')} style={styles.background} />
+            <View style={styles.box}>
+                {prices.map((item, index) => (
+                    <Pressable key={index} onPress={() => handleSelectItem(item)} style={styles.gems}>
+                        <Image source={Gem} style={styles.gem} />
+                        <Text style={styles.desc}>{item.gems} LS</Text>
+                        <Text style={styles.price}>{item.price}$</Text>
+                    </Pressable>
+                ))}
+            </View>
+            <Modal animationType="slide" visible={showPaymentModal && selectedItem !== null} transparent={true}>
+                <View style={styles.modalContainer}>
+                    <PaymentScreen selectedItem={selectedItem} onClose={() => setShowPaymentModal(false)} />
+                </View>
+            </Modal>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        width: "100%",
-        height: "100%",
-        backgroundColor: "#0096FF",
-        justifyContent: "center",
-        alignItems: "center",
-        alignSelf: "center"
-    },
-    tag: {
-        color: "white",
-        fontSize: 18,
-        fontWeight: "bold",
-        fontFamily: 'Kode',
+        flex: 1,
+        backgroundColor: '#0096FF',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     back: {
-        position: "absolute",
+        position: 'absolute',
         flex: 1,
         right: 20,
         top: 5,
         zIndex: 1,
     },
     price: {
-        position: "absolute",
+        position: 'absolute',
         bottom: 5,
-        backgroundColor: "green",
-        width: "50%",
-        justifyContent: "center",
-        alignItems: "center",
+        backgroundColor: 'green',
+        width: '50%',
+        justifyContent: 'center',
+        alignItems: 'center',
         height: 30,
-        borderRadius: 20, // Add border radius for rounded corners
+        borderRadius: 20,
+        color: 'white',
+        textAlign: 'center',
+        paddingVertical: 5,
     },
     desc: {
-        position: "absolute",
+        position: 'absolute',
         right: 13,
         fontFamily: 'Kode',
         fontSize: 25,
         top: 8,
+        color: 'white',
+        textShadowColor: 'rgba(0, 0, 0, 0.5)',
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 3,
     },
+
     gem: {
-        position: "absolute",
+        position: 'absolute',
         left: 0,
         top: 20,
-        width: "65%",
-        height: "65%",
+        width: '65%',
+        height: '65%',
     },
     gems: {
-        position: "relative",
-        height: "45%",
-        width: "30%",
+        position: 'relative',
+        height: '45%',
+        width: '30%',
         margin: 5,
-        // backgroundColor: "#00000099",
-        justifyContent: "center",
-        alignItems: "center",
-        shadowColor: "#000",
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#000',
         shadowOffset: {
             width: 0,
             height: 2,
@@ -157,28 +118,26 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
     },
-    text: {
-        color: "white",
-    },
     box: {
         flex: 1,
-        width: "70%",
-        flexDirection: "row",
+        width: '70%',
+        flexDirection: 'row',
         padding: 5,
         paddingTop: 20,
         margin: 30,
-        backgroundColor: "rgba(255, 255, 255, 0.80)",
-        flexWrap: "wrap",
-        justifyContent: "center",
-        alignItems: "center",
+        backgroundColor: 'rgba(255, 255, 255, 0.80)',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     background: {
         flex: 1,
-        width: "100%",
-        height: "100%",
-        resizeMode: "cover",
+        width: '100%',
+        height: '100%',
+        resizeMode: 'cover',
         opacity: 0.95,
-        position: "absolute"
-    }
-})
+        position: 'absolute',
+    },
+});
+
 export default Shop;

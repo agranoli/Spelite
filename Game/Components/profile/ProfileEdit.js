@@ -50,7 +50,6 @@ const ProfileEdit = ({ navigation }) => {
     const handleSave = async () => {
         let requestData = {};
 
-        // Only include fields that are filled
         if (username) {
             requestData.username = username;
         }
@@ -69,7 +68,6 @@ const ProfileEdit = ({ navigation }) => {
                 }
             });
             alert('Profile updated successfully');
-            // Reload the app by replacing the current screen with a new instance of ProfileEdit
             navigation.replace('ProfileEdit');
         } catch (error) {
             console.error('Failed to update profile:', error);

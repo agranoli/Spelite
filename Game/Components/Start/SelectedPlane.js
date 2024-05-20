@@ -12,7 +12,7 @@ const SelectedPlane = () => {
                 try {
                     const storedIndex = await AsyncStorage.getItem('selectedPlaneIndex');
                     if (storedIndex !== null) {
-                        setSelectedPlaneIndex(parseInt(storedIndex, 10)); // Parse to integer
+                        setSelectedPlaneIndex(parseInt(storedIndex, 10));
                         console.log('Selected plane index retrieved from AsyncStorage:', storedIndex);
                     }
                 } catch (error) {
@@ -48,8 +48,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     image: {
-        width: 400, // Adjust as needed
-        height: 250, // Adjust as needed
+        width: 400,
+        height: 250,
     },
 });
 

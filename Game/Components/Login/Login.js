@@ -8,6 +8,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const LoginPage = ({ navigation }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [usernameError, setUsernameError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const [loginError, setLoginError] = useState('');
 
     useEffect(() => {
         const lockOrientation = async () => {
@@ -20,8 +23,22 @@ const LoginPage = ({ navigation }) => {
     }, []);
 
     const handleLogin = async () => {
-        if (!username || !password) {
-            alert('Please fill out all the fields');
+        let hasError = false;
+        setUsernameError('');
+        setPasswordError('');
+        setLoginError('');
+
+        if (!username) {
+            setUsernameError('Please enter your username');
+            hasError = true;
+        }
+
+        if (!password) {
+            setPasswordError('Please enter your password');
+            hasError = true;
+        }
+
+        if (hasError) {
             return;
         }
 
@@ -36,9 +53,11 @@ const LoginPage = ({ navigation }) => {
                 await AsyncStorage.setItem('token', response.data.token);
                 navigation.navigate('Menu');
             } else {
+                setLoginError('Invalid username or password');
                 console.error('Token not found in login response');
             }
         } catch (error) {
+            setLoginError('An error occurred during login');
             console.error('Login error:', error);
         }
     };
@@ -68,6 +87,7 @@ const LoginPage = ({ navigation }) => {
                             value={username}
                             onChangeText={(text) => setUsername(text)}
                         />
+                        {usernameError ? <Text style={styles.errorText}>{usernameError}</Text> : null}
                     </View>
                     <View style={styles.inputContainer}>
                         <Text style={styles.label}>Password</Text>
@@ -78,10 +98,12 @@ const LoginPage = ({ navigation }) => {
                             onChangeText={(text) => setPassword(text)}
                             secureTextEntry
                         />
+                        {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
                     </View>
                     <View style={[styles.inputContainer, { marginBottom: 20 }]}>
                         <Button title="Login" onPress={handleLogin} color="#7393B3" />
-                        <Button title="Dont have an account? Register" onPress={() => navigation.navigate('Register')} color="#7393B3" />
+                        {loginError ? <Text style={styles.errorText}>{loginError}</Text> : null}
+                        <Button title="Don't have an account? Register" onPress={() => navigation.navigate('Register')} color="#7393B3" />
                     </View>
                 </View>
             </Animated.View>
@@ -100,6 +122,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        height: '100%',
         width: "100%"
     },
     formContainer: {
@@ -107,6 +130,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 20,
         width: '80%',
+        height: '100%',
         alignItems: 'center',
         position: 'relative',
     },
@@ -134,6 +158,10 @@ const styles = StyleSheet.create({
         fontSize: 16,
         borderColor: '#7393B3',
         width: '100%',
+    },
+    errorText: {
+        color: 'red',
+        marginTop: 5,
     },
     backButton: {
         position: 'absolute',

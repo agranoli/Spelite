@@ -4,123 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5383476a-498f-4174-b7d6-643323a61248" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/GameHistory/GameHistory.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/Images/back.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/Images/background.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/Images/gem.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/Images/plane1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/Images/plane2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/Images/plane3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/Images/plane4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/Images/plane5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/Images/profile.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/Images/profile1.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/Images/profile2.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/Images/profile3.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/Leaderboard/Leaderboard.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/Login/Login.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/PlaneSelect/PlaneSelectScreen.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/Register/Register.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/Start/MenuScreen.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/Start/ProfileStats.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/Start/SelectedPlane.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/Start/ShopIcon.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/Start/SideComponents.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/Start/StartButton.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/payment.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/profile/ProfileEdit.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/shop/shop.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/sound/menu.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/Components/sound/menu1.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/_layout.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/assets/fonts/KodeMono-VariableFont_wght.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/php/GameHistory.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/php/GetLeaderboard.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/php/getUserData.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/php/login.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/php/registerUser.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/php/updatePlane.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game/php/updateProfile.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/.coveralls.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/.eslintrc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/.npmignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/.travis.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/CHANGELOG.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/component.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/karma.conf.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/node.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/src/browser.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/src/debug.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/src/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/src/inspector-log.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/src/node.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/follow-redirects/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/follow-redirects/create.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/follow-redirects/http.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/follow-redirects/https.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/follow-redirects/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/follow-redirects/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/ms/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/ms/license.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/ms/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/ms/readme.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/CHANGELOG.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/UPGRADE_GUIDE.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/axios.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/dist/axios.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/dist/axios.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/dist/axios.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/dist/axios.min.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/adapters/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/adapters/fetch.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/adapters/http.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/adapters/xhr.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/axios.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/core/Axios.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/core/InterceptorManager.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/core/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/core/createError.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/core/dispatchRequest.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/core/enhanceError.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/core/settle.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/core/transformData.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/defaults.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/helpers/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/helpers/bind.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/helpers/btoa.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/helpers/buildURL.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/helpers/combineURLs.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/helpers/cookies.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/helpers/deprecatedMethod.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/helpers/isAbsoluteURL.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/helpers/isURLSameOrigin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/helpers/normalizeHeaderName.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/helpers/parseHeaders.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/helpers/spread.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/lib/utils.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/react-native-axios/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/stream-consume/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/stream-consume/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/stream-consume/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Spelite.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Spelite.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/Game/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Game/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Game/package.json" afterDir="false" />
-    </list>
+    <list default="true" id="5383476a-498f-4174-b7d6-643323a61248" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -146,33 +30,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Merging main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Applications/WebStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/Game/Components/Images" />
-      <recent name="$PROJECT_DIR$/Game/assets/fonts" />
+      <recent name="$PROJECT_DIR$/Game/assets" />
+      <recent name="$PROJECT_DIR$/Game/.expo" />
       <recent name="$PROJECT_DIR$/Game/Components" />
-      &gt;&gt;&gt;&gt;&gt;&gt;&gt; cbadc1f91168d236d515cbc7e58cb012f760e9e8
+      <recent name="$PROJECT_DIR$/Game/assets/sound" />
+      <recent name="$PROJECT_DIR$/Game/assets/fonts" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="5383476a-498f-4174-b7d6-643323a61248" name="Changes" comment="" />
-      <changelist id="e0fbc1e8-fe68-426d-9990-abebf861d2f7" name="Changes" comment="" />
       <created>1712655695761</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -183,6 +68,7 @@
       <workItem from="1713101389821" duration="15287000" />
       <workItem from="1713865282834" duration="2253000" />
       <workItem from="1715060432861" duration="20866000" />
+      <workItem from="1715935350550" duration="17778000" />
     </task>
     <servers />
   </component>

@@ -7,14 +7,12 @@ const Leaderboard = ({ navigation }) => {
     const [topPlayers, setTopPlayers] = useState([]);
 
     useEffect(() => {
-        // Fetch leaderboard data when the component mounts
         fetchData();
     }, []);
 
     const fetchData = async () => {
         try {
             const response = await axios.get('http://172.20.10.3:8888/GetLeaderboard.php');
-            // Assuming the response data is an array of top players
             setTopPlayers(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -94,7 +92,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         flex: 1,
         textAlign: 'center',
-        color: '#ffffff', // Header text color
+        color: '#ffffff'
     },
     row: {
         flexDirection: 'row',
@@ -108,7 +106,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         flex: 1,
         textAlign: 'center',
-        color: '#ffffff', // Cell text color
+        color: '#ffffff'
     },
     backButton: {
         position: 'absolute',
