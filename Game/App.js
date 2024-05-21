@@ -13,6 +13,7 @@ import GameHistory from "./Components/GameHistory/GameHistory";
 import ProfileEdit from "./Components/profile/ProfileEdit";
 import Shop from "./Components/shop/shop";
 import Payment from "./Components/shop/payment";
+import Game from "./Components/game/game";
 
 const Stack = createNativeStackNavigator();
 
@@ -81,6 +82,11 @@ export default function App() {
             <Stack.Screen
                 name="Edit"
                 component={ProfileEdit}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="Game"
+                component={Game}
                 options={{ headerShown: false }}
             />
           </Stack.Navigator>

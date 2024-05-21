@@ -6,6 +6,7 @@ import ShopIcon from "./ShopIcon";
 import SideComponents from "./SideComponents";
 import StartButton from "./StartButton";
 import SelectedPlane from "./SelectedPlane";
+import Game from "../game/game";
 import * as ScreenOrientation from "expo-screen-orientation";
 
 const MenuScreen = ({ navigation }) => {
@@ -64,7 +65,7 @@ const MenuScreen = ({ navigation }) => {
             <ProfileStats navigation={navigation} />
             <ShopIcon navigation={navigation} />
             <SideComponents navigation={navigation} />
-            <StartButton navigation={navigation} />
+            <Game navigation={navigation} />
         </View>
     );
 };

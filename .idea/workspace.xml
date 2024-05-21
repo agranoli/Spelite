@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5383476a-498f-4174-b7d6-643323a61248" name="Changes" comment="" />
+    <list default="true" id="5383476a-498f-4174-b7d6-643323a61248" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Game/assets/sound/game.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/Game/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game/Components/Start/MenuScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/Game/Components/Start/MenuScreen.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
