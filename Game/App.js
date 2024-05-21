@@ -6,8 +6,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import 'react-native-reanimated'
 import MenuScreen from './Components/Start/MenuScreen';
 import Shop from "./Components/shop/shop";
-import Payment from "./Components/payment";
+import Payment from "./Components/PaymentScreen";
 import Game from "./Components/game/game";
+import { StripeProvider } from '@stripe/stripe-react-native';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,14 +30,18 @@ export default function App() {
 
 
   return (
+      <StripeProvider
+          publishableKey="pk_test_51MLtN5DjfQfCJkDAms2C5NcgvPCTtU8ORYtzsPMGqYAbXh1a5OdsDbzWT06o3ndaVIAtXdwtMh12vYxmbMj9RNs7004DATCm0d">
       <View style={styles.container}>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Game">
-            <Stack.Screen
-                name="Shop"
-                component={Shop}
-                options={{ headerShown: false }} // Remove header for Shop
-            />
+          <Stack.Navigator initialRouteName="Shop">
+
+              <Stack.Screen
+                  name="Shop"
+                  component={Shop}
+                  options={{ headerShown: false }} // Remove header for Shop
+              />
+
             <Stack.Screen
                 name="Payment"
                 component={Payment}
@@ -50,6 +55,7 @@ export default function App() {
           </Stack.Navigator>
         </NavigationContainer>
       </View>
+      </StripeProvider>
   );
 }
 

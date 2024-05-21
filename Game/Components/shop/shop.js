@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, Image, Pressable, Modal } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
 import { useNavigation } from '@react-navigation/native';
 import Gem from '../Images/gem.png';
-import PaymentScreen from "../payment";
+import PaymentScreen from "../PaymentScreen";
+import { StripeProvider } from '@stripe/stripe-react-native';
 
 const prices = [
     { gems: 50, price: 2.99 },
@@ -19,40 +20,65 @@ function Shop() {
     const [selectedItem, setSelectedItem] = useState(null);
     const [showPaymentModal, setShowPaymentModal] = useState(false);
 
-    const handleSelectItem = (item) => {
+    const handleSelectItem = async (item) => {
         setSelectedItem(item);
-        navigation.navigate('Payment', { selectedItem: item }); // Navigate to PaymentScreen with selected item
+
+        try {
+            const response = await fetch('http://172.20.10.2/datubazes/stripe/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ amount: item.price * 100 }), // Convert price to cents
+            });
+            const data = await response.json();
+            if (response.ok) {
+                setSelectedItem({ ...item, clientSecret: data.clientSecret });
+                setShowPaymentModal(true);
+            } else {
+                console.error('Error creating payment intent:', data);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
 
     const handleReturnPress = () => {
         navigation.navigate('Menu');
     };
 
+    const handleClosePayment = () => {
+        setShowPaymentModal(false);
+    };
+
+
     return (
-        <View style={styles.container}>
-            <View style={styles.back}>
-                <Pressable onPress={handleReturnPress}>
-                    <Svg width={50} height={50} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="w-6 h-6">
-                        <Path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
-                    </Svg>
-                </Pressable>
-            </View>
-            <Image source={require('../Images/background.jpeg')} style={styles.background} />
-            <View style={styles.box}>
-                {prices.map((item, index) => (
-                    <Pressable key={index} onPress={() => handleSelectItem(item)} style={styles.gems}>
-                        <Image source={Gem} style={styles.gem} />
-                        <Text style={styles.desc}>{item.gems} LS</Text>
-                        <Text style={styles.price}>{item.price}$</Text>
+        <StripeProvider publishableKey="pk_live_51MLtN5DjfQfCJkDARKMZi5zjByrSgTPIzsPSBl97NsT8evpv5Gtv8f5qFY7r7YNIeWL2d9BTvT0koywxRr13o77p00JyDU2MmS">
+            <View style={styles.container}>
+                <View style={styles.back}>
+                    <Pressable onPress={handleReturnPress}>
+                        <Svg width={50} height={50} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white">
+                            <Path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                        </Svg>
                     </Pressable>
-                ))}
-            </View>
-            <Modal animationType="slide" visible={showPaymentModal && selectedItem !== null} transparent={true}>
-                <View style={styles.modalContainer}>
-                    <PaymentScreen selectedItem={selectedItem} onClose={() => setShowPaymentModal(false)} />
                 </View>
-            </Modal>
-        </View>
+                <Image source={require('../Images/background.jpeg')} style={styles.background} />
+                <View style={styles.box}>
+                    {prices.map((item, index) => (
+                        <Pressable key={index} onPress={() => handleSelectItem(item)} style={styles.gems}>
+                            <Image source={Gem} style={styles.gem} />
+                            <Text style={styles.desc}>{item.gems} LS</Text>
+                            <Text style={styles.price}>{item.price}$</Text>
+                        </Pressable>
+                    ))}
+                </View>
+                <Modal animationType="slide" visible={showPaymentModal && selectedItem !== null} transparent={true}>
+                    <View style={styles.modalContainer}>
+                        <PaymentScreen selectedItem={selectedItem} onClose={handleClosePayment} />
+                    </View>
+                </Modal>
+            </View>
+        </StripeProvider>
     );
 }
 
@@ -137,6 +163,11 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
         opacity: 0.95,
         position: 'absolute',
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
 
