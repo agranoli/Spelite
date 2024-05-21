@@ -6,11 +6,18 @@ import ShopIcon from "./ShopIcon";
 import SideComponents from "./SideComponents";
 import StartButton from "./StartButton";
 import SelectedPlane from "./SelectedPlane";
+import * as ScreenOrientation from "expo-screen-orientation";
 
 const MenuScreen = ({ navigation }) => {
     const [sound, setSound] = useState(null);
 
     useEffect(() => {
+        const lockOrientation = async () => {
+            await ScreenOrientation.lockAsync(
+                ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT
+            );
+        };
+        lockOrientation();
         let soundObject;
 
         const loadSound = async () => {

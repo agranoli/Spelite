@@ -47,10 +47,10 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Game/assets/sound" />
       <recent name="$PROJECT_DIR$/Game/assets" />
       <recent name="$PROJECT_DIR$/Game/.expo" />
       <recent name="$PROJECT_DIR$/Game/Components" />
-      <recent name="$PROJECT_DIR$/Game/assets/sound" />
       <recent name="$PROJECT_DIR$/Game/assets/fonts" />
     </key>
   </component>
@@ -68,7 +68,7 @@
       <workItem from="1713101389821" duration="15287000" />
       <workItem from="1713865282834" duration="2253000" />
       <workItem from="1715060432861" duration="20866000" />
-      <workItem from="1715935350550" duration="17778000" />
+      <workItem from="1715935350550" duration="19254000" />
     </task>
     <servers />
   </component>
